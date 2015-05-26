@@ -1,0 +1,13 @@
+material portada
+{
+ technique 
+ {
+   pass 
+   {
+     texture_unit 
+     {
+       texture portada.jpg
+     }
+   }
+ }
+}

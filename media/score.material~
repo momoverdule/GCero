@@ -1,0 +1,19 @@
+
+material Score 
+{
+ technique 
+ {
+
+   pass 
+   {
+     texture_unit 
+     {
+       texture score.tga
+     }
+
+
+
+ }
+}
+
+

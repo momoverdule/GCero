@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GUILayout>
+
+//-----------------------Reiniciar partida
+  <Window Type="TaharezLook/FrameWindow" Name="reiniciar">
+    <Property Name="Text" Value="Reiniciar Partda"/>
+    <Property Name="TitlebarEnabled" Value="True"/>
+    <Property Name="UnifiedAreaRect" Value="{{0.3,0},{0.4,0},{0.7,0},{0.6,0}}"/>
+
+    <!-- Reanudar Partida -->
+    <Window Type="TaharezLook/Button" Name="reiniciar/Aceptar">
+      <Property Name="Text" Value="Aceptar" />
+      <Property Name="UnifiedAreaRect" Value="{{0.1,0},{0.25,0},{0.4,0},{0.75,0}}"/>
+    </Window>
+    
+        <!-- Jugar -->
+    <Window Type="TaharezLook/Button" Name="reiniciar/Cancelar">
+      <Property Name="Text" Value="Cancelar" />
+      <Property Name="UnifiedAreaRect" Value="{{0.6,0},{0.25,0},{0.9,0},{0.75,0}}"/>
+    </Window>
+  </Window>//----------------------------------
+  
+  
+//-----------------------------Scores
+  <Window Type="TaharezLook/StaticText" Name="FormatWin/tiempo">
+      <Property Name="UnifiedAreaRect" Value="{{0.8,0},{0.05,0},{0.9,0},{0.12,0}}"/>
+  </Window> //-----------------------------------
+    
+  
+</GUILayout>

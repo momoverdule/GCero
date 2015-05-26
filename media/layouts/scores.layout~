@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GUILayout>
+  <Window Type="TaharezLook/FrameWindow" Name="Scores">
+    <Property Name="Text" Value="Puntuaciones"/>
+    <Property Name="TitlebarEnabled" Value="True"/>
+    <Property Name="UnifiedAreaRect" Value="{{0.3,0},{0.2,0},{0.80,0},{0.9,0}}"/>
+
+    <!-- Lista -->
+    <Window Type="TaharezLook/Listbox" Name="Lista" >
+      <Property Name="Text" >List Box</Property>
+      <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+      <Property Name="UnifiedAreaRect" Value="{{0.05,0},{0.05,0},{0.95,0},{0.8,0}}" />
+    </Window>
+
+    <!-- Cerrar Button -->
+    <Window Type="TaharezLook/Button" Name="Lista/Cerrar">
+      <Property Name="Text" Value="[colour='FF000000']Cerrar" />
+      <Property Name="UnifiedAreaRect" Value="{{0.4,0},{0.9,0},{0.6,0},{1,0}}"/>
+    </Window>
+
+  </Window>
+</GUILayout>

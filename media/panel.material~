@@ -1,0 +1,92 @@
+material panelInfoM 
+{
+ technique 
+ {
+   pass 
+   {
+     scene_blend src_alpha one_minus_src_alpha
+     texture_unit 
+     {
+       texture panel.tga
+     }
+   }
+ }
+}
+
+material Explocion2
+{
+ technique 
+ {
+   pass 
+   {
+     texture_unit 
+     {
+       texture muerto.jpg
+     }
+   }
+ }
+}
+
+material Explocion 
+{
+ technique 
+ {
+   pass 
+   {
+     texture_unit 
+     {
+       texture portada.jpg
+     }
+   }
+ }
+}
+
+
+material men
+{
+ technique 
+ {
+   pass 
+   {
+     texture_unit 
+     {
+       texture fondoEspacio.jpg
+     }
+   }
+ }
+}
+
+
+
+material pausa
+{
+ technique 
+ {
+   pass 
+   {
+     texture_unit 
+     {
+       texture pausa.tga
+     }
+   }
+ }
+}
+
+
+
+
+material Hud
+{
+ zorder 650
+ technique 
+ {
+   pass 
+   {
+     texture_unit 
+     {
+       texture hud.jpg
+     }
+   }
+ }
+}
+

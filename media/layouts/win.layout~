@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GUILayout>
+  <Window Type="TaharezLook/FrameWindow" Name="win">
+    <Property Name="Text" Value="Desert Test"/>
+    <Property Name="TitlebarEnabled" Value="true"/>
+    <Property Name="UnifiedAreaRect" Value="{{0.3,0},{0.3.5,0},{0.8,0},{0.6,0}}"/>
+
+    <!-- txt -->
+    <Window Type="TaharezLook/StaticText" Name="win/Text">
+      <Property Name="Text" Value="Prueba Completada!" />
+      <Property Name="UnifiedAreaRect" Value="{{0.2,0},{0.2,0},{0.8,0},{0.4,0}}"/>
+    </Window> 
+
+
+    
+    <!-- Reiniciar -->
+    <Window Type="TaharezLook/Button" Name="win/Restart">
+      <Property Name="Text" Value="Reinciar Prueba" />
+      <Property Name="UnifiedAreaRect" Value="{{0.1,0},{0.6,0},{0.4,0},{0.8,0}}"/>
+    </Window>
+
+    <!-- Reiniciar -->
+    <Window Type="TaharezLook/Button" Name="win/Siguiente">
+      <Property Name="Text" Value="Prueba Siguiente" />
+      <Property Name="UnifiedAreaRect" Value="{{0.6,0},{0.6,0},{0.9,0},{0.8,0}}"/>
+    </Window>
+    
+  </Window>
+    
+
+</GUILayout>

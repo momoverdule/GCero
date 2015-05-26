@@ -1,0 +1,15 @@
+gui
+{
+    container Panel(mira) 
+    {
+	metrics_mode pixels
+        left 0
+        top 0
+        width 800
+        height 600
+        vert_align top
+        horz_align left
+        material mira
+    }
+} 
+   

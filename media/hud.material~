@@ -1,0 +1,36 @@
+
+material vidaFrame
+{
+ technique 
+ {
+   pass 
+   {
+     texture_unit 
+     {
+       texture vidasMarco.png
+     }
+   }
+ }
+}
+
+material scores
+{
+ technique 
+ {
+
+   pass 
+   {
+     scene_blend src_alpha 
+     one_minus_src_alpha
+     
+     texture_unit 
+     {
+       texture score.png
+     }
+
+
+
+ }
+}
+
+

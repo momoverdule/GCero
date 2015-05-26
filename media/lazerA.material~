@@ -1,0 +1,43 @@
+// lazerA genrated by blender2ogre 0.6.0
+
+material lazerA 
+{
+    receive_shadows on 
+
+    technique
+    {
+        pass lazerA
+        {
+            ambient 1.11435540020465851 1.710770308971405 1.8000000715255737 1.0
+            diffuse 0.09148432152694941 0.5686162556501664 0.640000066757203 1.0
+            specular 0.5 0.5 0.5 1.0 12.5
+            emissive vertexcolour
+            emit 1 1 1
+
+            alpha_to_coverage off
+            colour_write on
+            cull_hardware clockwise
+            depth_check on
+            depth_func less_equal
+            depth_write on
+            illumination_stage 
+            light_clip_planes off
+            light_scissor off
+            lighting on
+            normalise_normals off
+            polygon_mode solid
+            scene_blend one zero
+            scene_blend_op add
+            shading gouraud
+            transparent_sorting on
+
+            texture_unit 
+            {
+                texture lazer2.jpg
+                tex_address_mode wrap
+                scale 1.0 1.0
+                colour_op modulate
+            }
+        }
+    }
+}

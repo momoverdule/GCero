@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GUILayout>
+
+//-----------------------Reiniciar partida
+  <Window Type="TaharezLook/FrameWindow" Name="reiniciar">
+    <Property Name="Text" Value="Reiniciar Partda"/>
+    <Property Name="TitlebarEnabled" Value="True"/>
+    <Property Name="UnifiedAreaRect" Value="{{0.3,0},{0.4,0},{0.7,0},{0.6,0}}"/>
+
+    <!-- Reanudar Partida -->
+    <Window Type="TaharezLook/Button" Name="reiniciar/Aceptar">
+      <Property Name="Text" Value="Aceptar" />
+      <Property Name="UnifiedAreaRect" Value="{{0.1,0},{0.25,0},{0.4,0},{0.75,0}}"/>
+    </Window>
+    
+        <!-- Jugar -->
+    <Window Type="TaharezLook/Button" Name="reiniciar/Cancelar">
+      <Property Name="Text" Value="Cancelar" />
+      <Property Name="UnifiedAreaRect" Value="{{0.6,0},{0.25,0},{0.9,0},{0.75,0}}"/>
+    </Window>
+  </Window>//----------------------------------
+  
+  //-----------------------------Scores
+    <Window Type="TaharezLook/StaticText" Name="gameScore">
+      <Property Name="UnifiedAreaRect" Value="{{0.8,0},{0.94,0},{0.99,0},{0.99,0}}"/>
+    </Window>  //-----------------------------------
+  
+  
+  
+//-----------------------------Scores//win
+  <Window Type="TaharezLook/FrameWindow" Name="Win">
+  	<Property Name="Text" Value="Feliciades, lograste encender los propulsores a tiempo!"/>
+  	<Property Name="TitlebarEnabled" Value="True"/>
+  	<Property Name="UnifiedAreaRect" Value="{{0.2,0},{0.05,0},{0.8,0},{0.3,0}}"/>
+   
+    <!-- Contenido -->
+    <Window Type="TaharezLook/StaticText" Name="Win/txt">
+        <Property Name="Text" Value="" />
+        <Property Name="UnifiedAreaRect" Value="{{0.05,0},{0.05,0},{0.95,0},{0.55,0}}"/>
+     </Window>
+
+	   <!-- Edit Box -->
+  	<Window Type="TaharezLook/Editbox" Name="Win/name" >
+		<Property Name="Font" Value="DejaVuSans-10" />
+        	<Property Name="MaxTextLength" Value="15" />
+	        <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />	
+    		<Property Name="UnifiedAreaRect" Value="{{0.05,0},{0.6,0},{0.54,0},{0.95,0}}" />
+	</Window>
+
+	    <!-- Cancel Button -->
+	<Window Type="TaharezLook/Button" Name="Win/Cancelar">
+	    	<Property Name="Text" Value="Cancelar" />
+	    	<Property Name="UnifiedAreaRect" Value="{{0.76,0},{0.7,0},{0.95,0},{0.95,0}}"/>
+	</Window>
+	    <!-- Sumbit Button -->
+	<Window Type="TaharezLook/Button" Name="Win/Aceptar">
+	    	<Property Name="Text" Value="Aceptar" />
+	    	<Property Name="UnifiedAreaRect" Value="{{0.56,0},{0.7,0},{0.75,0},{0.95,0}}"/>
+	</Window>
+  </Window>//--------------------------------
+    
+  
+</GUILayout>

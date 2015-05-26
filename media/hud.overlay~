@@ -1,0 +1,67 @@
+hud0
+{
+    container Panel(vidaFrame0) 
+    {
+	zorder 20
+	metrics_mode pixels
+        left 10
+        top 500
+        width 200
+        height 100
+        vert_align top
+        horz_align left
+        material vidaFrame0
+    }	
+}
+
+hud1
+{
+    container Panel(vidaFrame1) 
+    {
+	zorder 20
+	metrics_mode pixels
+        left 10
+        top 500
+        width 200
+        height 100
+        vert_align top
+        horz_align left
+        material vidaFrame1
+    }	
+}
+
+
+hud2
+{
+    container Panel(vidaFrame2) 
+    {
+	zorder 20
+	metrics_mode pixels
+        left 10
+        top 500
+        width 200
+        height 100
+        vert_align top
+        horz_align left
+        material vidaFrame2
+    }	
+}
+
+
+hud3
+{
+    container Panel(vidaFrame3) 
+    {
+	zorder 20
+	metrics_mode pixels
+        left 10
+        top 500
+        width 200
+        height 100
+        vert_align top
+        horz_align left
+        material vidaFrame3
+    }	
+}
+
+

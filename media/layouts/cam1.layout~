@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GUILayout>
+
+    <!-- Cam1 -->
+    <Window Type="TaharezLook/Button" Name="gui/cam1">
+      <Property Name="Text" Value="Cam1" />
+      <Property Name="UnifiedAreaRect" Value="{{0.01,0},{0.01,0},{0.1,0},{0.1,0}}"/>
+    </Window>
+
+
+
+</GUILayout>

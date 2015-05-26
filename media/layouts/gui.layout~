@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GUILayout>
+    <Window Type="Vanilla/FrameWindow" Name="frame">
+        <Property Name="AlwaysOnTop" Value="True" />
+        <Property Name="UnifiedMinSize" Value="{{0.2,0},{0.2,0}}" />
+        <Property Name="UnifiedMaxSize" Value="{{0.8,0},{0.8,0}}" />
+        <Property Name="UnifiedPosition" Value="{{0.5,0},{0.5,0}}" />
+        <Property Name="UnifiedSize" Value="{{0.5,0},{0.45,0}}" />
+        <Property Name="Text" Value="Console" />
+        <Property Name="CloseButtonEnabled" Value="False" />
+    <!-- Cam1 -->
+    <Window Type="TaharezLook/Button" Name="gui/cam1">
+      <Property Name="Text" Value="Cam1" />
+      <Property Name="UnifiedAreaRect" Value="{{0.4,0},{0.1,0},{0.6,0},{0.15,0}}"/>
+    </Window>
+
+    <!-- Cam2 -->
+    <Window Type="TaharezLook/Button" Name="gui/cam2">
+      <Property Name="Text" Value="Cam2" />
+      <Property Name="UnifiedAreaRect" Value="{{0.03,0},{0.2,0},{0.2,0},{0.25,0}}"/>
+    </Window>
+    
+    <!-- Cam3 -->
+    <Window Type="TaharezLook/Button" Name="gui/cam3">
+      <Property Name="Text" Value="Cam3" />
+      <Property Name="UnifiedAreaRect" Value="{{0.03,0},{0.3,0},{0.2,0},{0.35,0}}"/>
+    </Window>
+</Window>
+</GUILayout>

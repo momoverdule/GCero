@@ -1,0 +1,7 @@
+Blue 
+{
+	type truetype
+	source Blue.ttf
+	size 25
+	resolution 96
+}

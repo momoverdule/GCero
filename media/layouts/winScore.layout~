@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GUILayout>
+
+
+/-----------------------------Scores//win
+  <Window Type="TaharezLook/FrameWindow" Name="scoreWin">
+  	<Property Name="Text" Value="Guardar Puntuacion?"/>
+  	<Property Name="TitlebarEnabled" Value="True"/>
+  	<Property Name="UnifiedAreaRect" Value="{{0.2,0},{0.05,0},{0.8,0},{0.3,0}}"/>
+   
+    <!-- Contenido -->
+    <Window Type="TaharezLook/StaticText" Name="scoreWin/txt">
+        <Property Name="Text" Value="" />
+        <Property Name="UnifiedAreaRect" Value="{{0.05,0},{0.05,0},{0.95,0},{0.55,0}}"/>
+     </Window>
+
+	   <!-- Edit Box -->
+  	<Window Type="TaharezLook/Editbox" Name="scoreWin/name" >
+		<Property Name="Font" Value="DejaVuSans-10" />
+        	<Property Name="MaxTextLength" Value="15" />
+	        <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />	
+    		<Property Name="UnifiedAreaRect" Value="{{0.05,0},{0.6,0},{0.54,0},{0.95,0}}" />
+	</Window>
+
+	    <!-- Cancel Button -->
+	<Window Type="TaharezLook/Button" Name="scoreWin/Cancelar">
+	    	<Property Name="Text" Value="Cancelar" />
+	    	<Property Name="UnifiedAreaRect" Value="{{0.76,0},{0.7,0},{0.95,0},{0.95,0}}"/>
+	</Window>
+	    <!-- Sumbit Button -->
+	<Window Type="TaharezLook/Button" Name="scoreWin/Aceptar">
+	    	<Property Name="Text" Value="Aceptar" />
+	    	<Property Name="UnifiedAreaRect" Value="{{0.56,0},{0.7,0},{0.75,0},{0.95,0}}"/>
+	</Window>
+  </Window>//--------------------------------
+  
+</GUILayout>

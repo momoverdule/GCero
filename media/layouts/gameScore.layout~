@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GUILayout>
+    <Window Type="TaharezLook/StaticText" Name="gameScore">
+      <Property Name="UnifiedAreaRect" Value="{{0.8,0},{0.94,0},{0.99,0},{0.99,0}}"/>
+    </Window> 
+    
+</GUILayout>

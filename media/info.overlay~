@@ -1,0 +1,70 @@
+
+
+Explo
+{
+    container Panel(Explocion2) 
+    {
+	zorder 50
+	metrics_mode pixels
+        left -100
+        top -1
+        width 20
+        height 115
+        vert_align top
+        horz_align left
+        material Explocion2
+    }	
+
+	  
+    container Panel(Explocion) 
+    {
+	zorder 20
+	metrics_mode pixels
+        left 0
+        top 0
+        width 800
+        height 600
+        vert_align top
+        horz_align left
+        material Explocion
+    }
+}
+
+
+Men
+{
+    container Panel(men) 
+    {
+	zorder 20
+	metrics_mode pixels
+        left 0
+        top 0
+        width 800
+        height 600
+        vert_align top
+        horz_align left
+        material men
+    }	
+
+}
+
+
+
+Pausa
+{
+    container Panel(pausa) 
+    {
+	zorder 20
+	metrics_mode pixels
+        left 0
+        top 0
+        width 200
+        height 150
+        vert_align top
+        horz_align left
+        material pausa
+    }	
+
+}
+
+

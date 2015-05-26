@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GUILayout>
+
+ 
+    
+    <!-- Cam3 -->
+    <Window Type="TaharezLook/Button" Name="gui/resortes">
+      <Property Name="Text" Value="Resorte" />
+      <Property Name="UnifiedAreaRect" Value="{{0.89,0},{0.89,0},{0.99,0},{0.93,0}}"/>
+    </Window>
+
+</GUILayout>

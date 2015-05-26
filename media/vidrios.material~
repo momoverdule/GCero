@@ -1,0 +1,44 @@
+// vidrios genrated by blender2ogre 0.6.0
+
+material vidrios 
+{
+    receive_shadows on 
+
+    technique
+    {
+        pass vidrios
+        {
+            ambient 0.16000000476837162 0.16000000476837162 0.16000000476837162 0.7678571343421936
+            diffuse 0.6400000190734865 0.6400000190734865 0.6400000190734865 0.7678571343421936
+            specular 1.0 1.0 1.0 0.7678571343421936 12.5
+            emissive 0.0 0.0 0.0 0.7678571343421936
+
+            alpha_to_coverage off
+            colour_write on
+            cull_hardware clockwise
+            depth_check on
+            depth_func less_equal
+            depth_write off
+            illumination_stage 
+            light_clip_planes off
+            light_scissor off
+            lighting off
+            normalise_normals off
+            polygon_mode solid
+            scene_blend one zero
+            scene_blend_op add
+            shading gouraud
+            transparent_sorting on
+
+            texture_unit 
+            {
+                texture green_box.png
+                tex_address_mode wrap
+                scale 1.0 1.0
+                scroll_anim 1.0 1.0 
+                colour_op alpha_blend
+                alpha_op_ex source1 src_manual src_texture 0.5
+            }
+        }
+    }
+}

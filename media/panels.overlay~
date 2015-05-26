@@ -1,0 +1,72 @@
+template element TextArea(letraAmarilla)
+{
+    font_name Blue
+		metrics_mode relative
+		char_height 0.08
+		colour 1.0 1.0 0.0    
+}
+
+
+template element TextArea(LetrasJuego)
+{
+    font_name Blue
+		metrics_mode relative
+		char_height 0.008
+		colour 1.0 1.0 1.0    
+}
+
+estadoInfo
+{
+
+    container Panel(estadoInfo) 
+    {
+ 	metrics_mode relative
+        left 0.8
+        top 0.5
+        width 0.19
+        height 0.2
+        vert_align top
+        horz_align left
+	material panel
+	
+
+		    element TextArea(hpInfo) : letraAmarilla 
+		    {
+				  top 0.02
+				  left 0.1	 
+		    }
+		    
+		    element TextArea(enerInfo) : letraAmarilla 
+		    {	
+				  top 0.04
+				  left 0.1	 
+		    }
+		    
+		    element TextArea(propInfo) : letraAmarilla 
+		    {
+				  top 0.06
+				  left 0.1	 
+		    }
+		    
+		    
+    }
+    
+}
+
+
+pcChat
+{
+
+    container Panel(pcChat) 
+    {
+ 	metrics_mode relative
+        left 0.9
+        top 0.4
+        width 0.07
+        height 0.6
+        vert_align top
+        horz_align left
+	material panel
+    }
+}
+

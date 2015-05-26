@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Imageset autoScaled="vertical" imagefile="resorteOverlay.png" name="loginButton" nativeHorzRes="96" nativeVertRes="42" version="2">
+<Image height="42" name="btnNormal" width="96" xPos="0" yPos="0" />
+</Imageset>

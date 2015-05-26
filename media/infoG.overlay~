@@ -1,0 +1,45 @@
+
+
+
+InfoG
+{
+    zorder 500
+
+    container Panel(panelInfo) 
+    {
+ 		    metrics_mode pixels
+        left 10
+        top -140
+        width 280
+        height 130
+        vert_align bottom
+        material panelInfoM
+
+		    element TextArea(fpsInfo) : MyTemplates/Text 
+		    {
+				  top 35
+				  left 180	 
+		    }
+
+		    element TextArea(camPosInfo) : MyTemplates/Text 
+		    {
+				  top 65
+				  left 120	 
+		    }
+
+		    element TextArea(camRotInfo) : MyTemplates/SmallText 
+		    {
+				  top 80
+				  left 120	 
+		    }
+
+		    element TextArea(modRotInfo) : MyTemplates/Text 
+		    {
+				  top 105
+				  left 120	 
+		    }
+
+
+	  }
+	  	  
+}

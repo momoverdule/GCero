@@ -1,0 +1,19 @@
+material Cielo
+{
+       receive_shadows off
+       
+       technique
+       {
+          pass
+          {
+             depth_write off
+             lighting off
+             fog_override true
+             
+             texture_unit
+             {
+                texture cielo.jpg
+             }
+          }
+       }
+}
