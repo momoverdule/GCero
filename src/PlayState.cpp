@@ -5,7 +5,7 @@
 #include <list>
 
 #include <SDL/SDL.h>
-#include <SDL/SDL_mixer.h>+
+#include <SDL/SDL_mixer.h>
 #include <GL/gl.h>
 
 #include <CEGUI.h>
@@ -199,11 +199,11 @@ bool PlayState::frameStarted(const Ogre::FrameEvent& evt)
   //overlays
   Ogre::OverlayElement *oe;
   oe = _overlayManager->getOverlayElement("hpInfo");
-  oe->setCaption("Estado de nave:" + StringConverter::toString(player->nave->getHp() ));
+  oe->setCaption("Estado de nave:  " + StringConverter::toString(player->nave->getHp() ));
   oe = _overlayManager->getOverlayElement("enerInfo");
-  oe->setCaption("Energia:      " + StringConverter::toString(player->nave->getEner() ));    
+  oe->setCaption("Energia:         " + StringConverter::toString(player->nave->getEner() ));    
   oe = _overlayManager->getOverlayElement("propInfo");
-  oe->setCaption("Propulsores:   " + StringConverter::toString(player->nave->getProp() ));
+  oe->setCaption("Propulsores:     " + StringConverter::toString(player->nave->getProp() ));
   
 
 
@@ -232,7 +232,7 @@ bool PlayState::frameStarted(const Ogre::FrameEvent& evt)
   while (_orbitas.end() != itOrbita) {
 
     //(*itOrbita)->
-    /*Vector3 direccion = Vector3(1,0,0);
+    Vector3 direccion = Vector3(1,0,0);
     if ((*itOrbita)->getPosition().x.fabs() > (*itOrbita)->getPosition().y.fabs()){
 
         if ((*itOrbita)->getPosition().x.fabs() < (*itOrbita)->getPosition().z.fabs()){
@@ -464,6 +464,8 @@ void PlayState::init(){
 
   //overlays
   Ogre::Overlay *overlay = _overlayManager->getByName("estadoInfo");
+  overlay->show();
+  overlay = _overlayManager->getByName("pcChat");
   overlay->show();
 
 
