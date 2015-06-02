@@ -2,6 +2,8 @@
 #include <iostream>
 #include "yisus.h"
 
+
+
 using namespace std;
 using namespace Ogre;
 
@@ -58,6 +60,7 @@ NavePj::NavePj(int hpNave, int enerNave, Vector3 pos){
     ener = enerMax/2;
     propulsion = 0;
     takingFire = false;
+    consola = new chatPc();
     
     numNaves++;
 
@@ -83,13 +86,13 @@ NavePj::NavePj(int hpNave, int enerNave, Vector3 pos){
     //seteando posicion de armas:
     gun1 = naveNodo->createChildSceneNode("gun1");
     gun1->setDirection(Vector3(1,0,0));
-    gun1->translate(Vector3(17,-1.7,8.3));
+    gun1->translate(Vector3(20,-1.7,8.3));
     
 
     gun2 = sMgr->createSceneNode("gun2");
     naveNodo->addChild(gun2);
     gun2->setDirection(1,0,0);
-    gun2->translate(Vector3(17,-1.7,-8.3));
+    gun2->translate(Vector3(20,-1.7,-8.3));
     
 
 
@@ -119,6 +122,9 @@ NavePj::NavePj(int hpNave, int enerNave, Vector3 pos){
     sat2Cam->setFarClipDistance(100);
     sat2Cam->setFOVy(Ogre::Degree(52));
     sat2Nodo->setPosition( Vector3(7,8,4));
+    
+ 
+
 
 
 
@@ -137,6 +143,9 @@ NavePj::NavePj(int hpNave, int enerNave, Vector3 pos){
   luzDelantera->setSpotlightFalloff(0.0000005f);
   luzDelantera->setAttenuation( 80, 1.0f, 4.5/10000, 75.0f/(2000*2000));
   //luzDelantera->setAttenuation( 1000, 1.0f, 4.5/1000, 75.0f/(1000*1000));
+
+
+  _overlayManager = OverlayManager::getSingletonPtr();
 
 /*
    
@@ -176,6 +185,23 @@ NavePj::NavePj(int hpNave, int enerNave, Vector3 pos){
 
 NavePj::~NavePj(){
 
+    delete naveNodo;
+    delete gun2;
+    delete gun1;
+    delete sat1Nodo;
+    delete sat2Nodo;
+    delete rigidBody;
+    delete naveEnt;
+    delete pCam;
+    delete sat1Cam;
+    delete sat2Cam;
+    delete viewP;
+    delete luzDelantera;
+    delete luzProp1;
+    delete luzProp2;
+    delete _overlayManager;
+    delete consola;
+
 }
 
 
@@ -186,10 +212,10 @@ void NavePj::lazerDer(){
         {
             ener -= 8;
             Yisus::summonYisus()->disparar(pCam->getDerivedOrientation(), gun1->_getDerivedPosition(), pCam->getDerivedDirection().normalisedCopy(), propulsion*2);
-        } else cout << "\n no energy" << endl; 
+        } else consola->addLinea("No energy"); 
         
     } else {
-         cout << "\n Ala derecha averiada" << endl; 
+         consola->addLinea("Cañon Izquierdo averiado: **Imposible disparar**"); 
     }
 }
 
@@ -200,33 +226,43 @@ void NavePj::lazerIzq(){
         {
             ener -= 8;
             Yisus::summonYisus()->disparar(pCam->getDerivedOrientation(), gun2->_getDerivedPosition(), pCam->getDerivedDirection().normalisedCopy(), propulsion*2);
-        } else cout << "\n no energy" << endl; 
+        } else consola->addLinea("Energia insuficiente"); 
     }else{
-        cout << "\n Ala derecha averiada" << endl; 
+        consola->addLinea("Cañon Derecho averiado: **Imposible disparar**");
     }
 }
 
 void NavePj::aplicarDmg(int dmg){
     
+    Ogre::OverlayElement *oe;
+    bool flag = false;
+
+    while ((!flag) && (hp > 0)){
     switch ((rand()%11)+1){
 
         case 1:{
-
+            if(casco.hp > 0) flag = true;
             casco.hp -= dmg;
+            oe =  _overlayManager->getOverlayElement("casco");
+            if ((casco.hp <= (casco.hpMax * 50)/100) && (casco.hp > (casco.hpMax * 20)/100)) oe->setMaterialName("cascoN");
 
             if (casco.hp <= (casco.hpMax * 20)/100){
                 casco.func = false;
                 if (casco.hp < 0)
                  {
                      casco.hp = 0;
-                 } 
+                 }
+                 
+                 oe->setMaterialName("cascoR");
             }  
 
             break;
         }
         case 2:{
-
+            if(generador.hp > 0) flag = true;
             generador.hp -= dmg;
+            oe =  _overlayManager->getOverlayElement("gen");
+            if ((generador.hp <= (generador.hpMax * 50)/100) && (generador.hp > (generador.hpMax * 20)/100)) oe->setMaterialName("genN");
 
             if (generador.hp <= (generador.hpMax * 20)/100){
                 generador.func = false;
@@ -234,12 +270,15 @@ void NavePj::aplicarDmg(int dmg){
                  {
                      generador.hp = 0;
                  } 
+                 oe->setMaterialName("genR");
             }  
             break;
         }
         case 3:{
-
+            if(ala_I.hp > 0) flag = true;
             ala_I.hp -= dmg;
+            oe = _overlayManager->getOverlayElement("alaIzq");
+            if ((ala_I.hp <= (ala_I.hpMax * 50)/100) && (ala_I.hp > (ala_I.hpMax * 20)/100)) oe->setMaterialName("alaIzqN");
 
             if (ala_I.hp <= (ala_I.hpMax * 20)/100){
                 ala_I.func = false;
@@ -247,44 +286,62 @@ void NavePj::aplicarDmg(int dmg){
                  {
                      ala_I.hp = 0;
                  } 
+                 oe->setMaterialName("alaIzqR");
             }
 
             break;
         }
         case 4:{
+            if(ala_D.hp > 0) flag = true;
             ala_D.hp -= dmg;
+            oe = _overlayManager->getOverlayElement("alaDer");
+            if ((ala_D.hp <= (ala_D.hpMax * 50)/100) && (ala_D.hp > (ala_D.hpMax * 20)/100)) oe->setMaterialName("alaDerN");
             if (ala_D.hp <= (ala_D.hpMax * 20)/100){
                 ala_D.func = false;
-                if (ala_D.hp < 0)  ala_D.hp = 0;         
+                if (ala_D.hp < 0)  ala_D.hp = 0;   
+                oe->setMaterialName("alaDerR");      
             }
             break;
         }
         case 5:{
+            if(prop_S.hp > 0) flag = true;
             prop_S.hp -= dmg;
+            oe = _overlayManager->getOverlayElement("propS");
+            if ((prop_S.hp <= (prop_S.hpMax * 50)/100) && (prop_S.hp > (prop_S.hpMax * 20)/100)) oe->setMaterialName("propSN");
             if (prop_S.hp <= (prop_S.hpMax * 20)/100){
                 prop_S.func = false;
-                if (prop_S.hp < 0)  prop_S.hp = 0;         
+                if (prop_S.hp < 0)  prop_S.hp = 0;  
+                oe->setMaterialName("propSR"); 
+
             }
             break;
         }
         case 6:{
+            if(computadora.hp > 0) flag = true;
             computadora.hp -= dmg;
+            oe = _overlayManager->getOverlayElement("comp");
+            if ((computadora.hp <= (computadora.hpMax * 50)/100) && (computadora.hp > (computadora.hpMax * 20)/100)) oe->setMaterialName("compN");
             if (computadora.hp <= (computadora.hpMax * 20)/100){
                 computadora.func = false;
-                if (computadora.hp < 0)  computadora.hp = 0;         
+                if (computadora.hp < 0)  computadora.hp = 0; 
+                oe->setMaterialName("compR");        
             }
             break;
         }
         case 7:{
-
+            if(prop_P.hp > 0) flag = true;
             prop_P.hp -= dmg;
+            oe = _overlayManager->getOverlayElement("propP");
+            if ((prop_P.hp <= (prop_P.hpMax * 50)/100) && (prop_P.hp > (prop_P.hpMax * 20)/100)) oe->setMaterialName("propPN");
             if (prop_P.hp <= (prop_P.hpMax * 20)/100){
                 prop_P.func = false;
-                if (prop_P.hp < 0)  prop_P.hp = 0;         
+                if (prop_P.hp < 0)  prop_P.hp = 0; 
+                oe->setMaterialName("propPR");         
             }
             break;
         }
         case 8:{
+            if(sat1.hp > 0) flag = true;
             sat1.hp -= dmg;
             if (sat1.hp <= (sat1.hpMax * 20)/100){
                 sat1.func = false;
@@ -293,7 +350,8 @@ void NavePj::aplicarDmg(int dmg){
             break;
         }
         case 9:{
-            sat1.hp -= dmg;
+            if(sat2.hp > 0) flag = true;
+            sat2.hp -= dmg;
             if (sat2.hp <= (sat2.hpMax * 20)/100){
                 sat2.func = false;
                 if (sat2.hp < 0)  sat2.hp = 0;         
@@ -302,6 +360,7 @@ void NavePj::aplicarDmg(int dmg){
             break;
         }
         case 10:{
+            if(arma_S.hp > 0) flag = true;
             arma_S.hp -= dmg;
             if (arma_S.hp <= (arma_S.hpMax * 20)/100){
                 arma_S.func = false;
@@ -311,6 +370,7 @@ void NavePj::aplicarDmg(int dmg){
             break;
         }
         case 11:{
+            if(defensas.hp > 0) flag = true;
             defensas.hp -= dmg;
             if (defensas.hp <= (defensas.hpMax * 20)/100){
                 defensas.func = false;
@@ -319,8 +379,7 @@ void NavePj::aplicarDmg(int dmg){
 
             break;
         }
-
-
+    }
     }
 
 
@@ -344,7 +403,7 @@ void NavePj::aplicarDmg(int dmg){
 
 
 void NavePj::generateEner(Ogre::Real deltaT) {
-    ener += 65 * generador.rate * deltaT;
+    ener += 50 * generador.rate * deltaT;
     if (ener > enerMax) ener = enerMax;
     if (ener < 0) ener = 0;
 }
@@ -353,113 +412,131 @@ void NavePj::regenerateHp(Ogre::Real deltaT){
     switch (nanoBots.focus){
         
         case 1: {   //casco
-            casco.hp += 15 * nanoBots.rate * deltaT;
+            casco.hp += 40 * nanoBots.rate * deltaT;
             if (casco.hp >= (casco.hpMax * nanoBots.limitMax)/100 ){    //limite de reparacion maximo
                 nanoBots.focus = 0;
             }
-            if (casco.hp >= (casco.hpMax * 20)/100){
-                casco.func = true;                                      //reactivando el funcionamiento
+            if ((casco.hp >= (casco.hpMax * 20)/100) && (casco.func == false)){
+                casco.func = true;
+                consola->addLinea("Casco en funcionamiento");
+                _overlayManager->getOverlayElement("casco")->setMaterialName("cascoN");    //reactivando el funcionamiento
             } 
             break;
         }
 
         case 2: {   //generador
-            generador.hp += 15 * nanoBots.rate * deltaT;
+            generador.hp += 40 * nanoBots.rate * deltaT;
             if (generador.hp >= (generador.hpMax * nanoBots.limitMax)/100 ){    
                 nanoBots.focus = 0;
             }
-            if (generador.hp >= (generador.hpMax * 20)/100){
-                generador.func = true; 
+            if ((generador.hp >= (generador.hpMax * 20)/100) && (generador.func == false)){
+                generador.func = true;
+                consola->addLinea("Generador de Energia en funcionamiento");
+                _overlayManager->getOverlayElement("gen")->setMaterialName("genN"); 
             }  
             break;
         }
         case 3: {   //ala_I
-            ala_I.hp += 15 * nanoBots.rate * deltaT;
+            ala_I.hp += 40 * nanoBots.rate * deltaT;
             if (ala_I.hp >= (ala_I.hpMax * nanoBots.limitMax)/100 ){    
                 nanoBots.focus = 0;
             }
-            if (ala_I.hp >= (ala_I.hpMax * 20)/100){
+            if ((ala_I.hp >= (ala_I.hpMax * 20)/100) && (ala_I.func == false)){
                 ala_I.func = true; 
+                consola->addLinea("Ala Izquierda en funcionamiento");
+                _overlayManager->getOverlayElement("alaIzq")->setMaterialName("alaIzqN");
             }  
             break;
         }
         case 4: {   //ala_D
-            ala_D.hp += 15 * nanoBots.rate * deltaT;
+            ala_D.hp += 40 * nanoBots.rate * deltaT;
             if (ala_D.hp >= (ala_D.hpMax * nanoBots.limitMax)/100 ){    
                 nanoBots.focus = 0;
             }
-            if (ala_D.hp >= (ala_D.hpMax * 20)/100){
+            if ((ala_D.hp >= (ala_D.hpMax * 20)/100) && (ala_D.func == false)){
                 ala_D.func = true; 
+                consola->addLinea("Ala Derecha en funcionamiento");
+                _overlayManager->getOverlayElement("alaDer")->setMaterialName("alaDerN");
             }  
             break;
         }
         case 5: {   //propulsor_S
-            prop_S.hp += 15 * nanoBots.rate * deltaT;
+            prop_S.hp += 40 * nanoBots.rate * deltaT;
             if (prop_S.hp >= (prop_S.hpMax * nanoBots.limitMax)/100 ){    
                 nanoBots.focus = 0;
             }
-            if (prop_S.hp >= (prop_S.hpMax * 20)/100){
+            if ((prop_S.hp >= (prop_S.hpMax * 20)/100) && (prop_S.func == false)){
                 prop_S.func = true; 
+                consola->addLinea("Propulsores Secundarios en funcionamiento");
+                _overlayManager->getOverlayElement("propS")->setMaterialName("propSN");
             }  
             break;
         }
         case 6: {   //propulsor_P
-            prop_P.hp += 15 * nanoBots.rate * deltaT;
+            prop_P.hp += 40 * nanoBots.rate * deltaT;
             if (prop_P.hp >= (prop_P.hpMax * nanoBots.limitMax)/100 ){    
                 nanoBots.focus = 0;
             }
-            if (prop_P.hp >= (prop_P.hpMax * 20)/100){
+            if ((prop_P.hp >= (prop_P.hpMax * 20)/100) && (prop_P.func == false)){
                 prop_P.func = true; 
+                consola->addLinea("Propulsores Primarios en funcionamiento");
+                _overlayManager->getOverlayElement("propP")->setMaterialName("propPN");
             }  
             break;
         }
         case 7: {   //computadora
-            computadora.hp += 15 * nanoBots.rate * deltaT;
+            computadora.hp += 40 * nanoBots.rate * deltaT;
             if (computadora.hp >= (computadora.hpMax * nanoBots.limitMax)/100 ){    
                 nanoBots.focus = 0;
             }
-            if (computadora.hp >= (computadora.hpMax * 20)/100){
+            if ((computadora.hp >= (computadora.hpMax * 20)/100) && (computadora.func == false)){
                 computadora.func = true; 
+                consola->addLinea("Computadora en funcionamiento");
+                _overlayManager->getOverlayElement("comp")->setMaterialName("compN");
             }  
             break;
         }
         case 8: {   //sat1
-            sat1.hp += 15 * nanoBots.rate * deltaT;
+            sat1.hp += 40 * nanoBots.rate * deltaT;
             if (sat1.hp >= (sat1.hpMax * nanoBots.limitMax)/100 ){    
                 nanoBots.focus = 0;
             }
-            if (sat1.hp >= (sat1.hpMax * 20)/100){
+            if ((sat1.hp >= (sat1.hpMax * 20)/100) && (sat1.func == false)){
                 sat1.func = true; 
+                consola->addLinea("Satelite de Posicionamiento en funcionamiento");
             }  
             break;
         }
         case 9: {   //sat2
-            sat2.hp += 15 * nanoBots.rate * deltaT;
+            sat2.hp += 40 * nanoBots.rate * deltaT;
             if (sat2.hp >= (sat2.hpMax * nanoBots.limitMax)/100 ){    
                 nanoBots.focus = 0;
             }
-            if (sat2.hp >= (sat2.hpMax * 20)/100){
+            if ((sat2.hp >= (sat2.hpMax * 20)/100) && (sat2.func == false)){
                 sat2.func = true; 
+                consola->addLinea("Satelit de Reconocimiento en funcionamiento");
             }  
             break;
         }
         case 10: {   //arma_S
-            arma_S.hp += 15 * nanoBots.rate * deltaT;
+            arma_S.hp += 40 * nanoBots.rate * deltaT;
             if (arma_S.hp >= (arma_S.hpMax * nanoBots.limitMax)/100 ){    
                 nanoBots.focus = 0;
             }
-            if (arma_S.hp >= (arma_S.hpMax * 20)/100){
+            if ((arma_S.hp >= (arma_S.hpMax * 20)/100) && (arma_S.func == false)){
                 arma_S.func = true; 
+                consola->addLinea("Armamento Secundario en funcionamiento");
             }  
             break;
         }
         case 11: {   //defensas
-            defensas.hp += 15 * nanoBots.rate * deltaT;
+            defensas.hp += 40 * nanoBots.rate * deltaT;
             if (defensas.hp >= (defensas.hpMax * nanoBots.limitMax)/100 ){    
                 nanoBots.focus = 0;
             }
-            if (defensas.hp >= (defensas.hpMax * 20)/100){
+            if ((defensas.hp >= (defensas.hpMax * 20)/100) && (defensas.func == false)){
                 defensas.func = true; 
+                consola->addLinea("Sistema de Defensa en funcionamiento");
             }  
             break;
         }
@@ -475,17 +552,23 @@ void NavePj::regenerateHp(Ogre::Real deltaT){
 void NavePj::calculate(Ogre::Real deltaT){
     if (nanoBots.focus != 0) regenerateHp(deltaT);    //reparacion
     if (generador.func) generateEner(deltaT);    //carga de energia
-    if (nanoBots.focus == 0) nanoBots.focus = setNanoBotsTarget();  //busqueda de reparaciones
+    /*if (nanoBots.focus == 0)*/ nanoBots.focus = setNanoBotsTarget();  //busqueda de reparaciones
     
     
     //propulsores
     naveNodo->translate(Vector3(pCam->getDerivedDirection() * propulsion*2));   //aplicar propulsion
-    if ((propulsion/15) < ener){
+
+    //rigidBody->forceActivationState ();
+    //btVector3 dir = btVector3(pCam->getDerivedDirection().x, pCam->getDerivedDirection().y, pCam->getDerivedDirection().z);
+    //rigidBody->getBulletRigidBody()->applyCentralForce(btVector3(dir * propulsion * 100));
+    
+    //rigidBody->getBulletRigidBody()->applyCentralForce(propulsion*pCam->getDerivedDirection().normalisedCopy());
+    if (((propulsion/15) < ener) && (prop_P.func == true)){
         ener -= propulsion/15;
     } else {
         propulsion -= 0.2;
         if (propulsion < 0) propulsion = 0;
-        cout << "\n sin energia" << endl;
+        consola->addLinea("Energia insuficiente");
     }
 
     hp = hpActual();
@@ -505,39 +588,50 @@ int NavePj::setNanoBotsTarget(){
     if (casco.hp < (casco.hpMax * nanoBots.limitMax)/100)
     {
         target = 1;
+        if (nanoBots.focus != target) consola->addLinea("Asignando NanoBots de reparacion: Caso Principal");
     } else if (generador.hp < (generador.hpMax * nanoBots.limitMax)/100)
         {
             target = 2;
+             if (nanoBots.focus != target) consola->addLinea("Asignando NanoBots de reparacion: Generador de Energia");
         } else if (ala_I.hp < (ala_I.hpMax * nanoBots.limitMax)/100)
             {
                 target = 3;
+                if (nanoBots.focus != target) consola->addLinea("Asignando NanoBots de reparacion: Ala Izquierda");
             } else if (ala_D.hp < (ala_D.hpMax * nanoBots.limitMax)/100)
                 {
                     target = 4;
+                    if (nanoBots.focus != target) consola->addLinea("Asignando NanoBots de reparacion: Ala Derecha");
                 } else if (prop_P.hp < (prop_P.hpMax * nanoBots.limitMax)/100)
                     {
                         target = 6;
+                        if (nanoBots.focus != target) consola->addLinea("Asignando NanoBots de reparacion: Propulsores Primarios");
                     } else if (prop_S.hp < (prop_S.hpMax * nanoBots.limitMax)/100)
                         {
                             target = 5;
+                            if (nanoBots.focus != target) consola->addLinea("Asignando NanoBots de reparacion: Propulsores Secundarios");
                         } else if (computadora.hp < (computadora.hpMax * nanoBots.limitMax)/100)
                             {
                                 target = 7;
+                                if (nanoBots.focus != target) consola->addLinea("Asignando NanoBots de reparacion: Computadora Interna");
                             } else if (defensas.hp < (defensas.hpMax * nanoBots.limitMax)/100)
                                 {         
-                                    target = 11;    
+                                    target = 11;
+                                    if (nanoBots.focus != target) consola->addLinea("Asignando NanoBots de reparacion: Sistema de Defensa");
                                 } else if (sat1.hp < (sat1.hpMax * nanoBots.limitMax)/100)
                                     {
                                         target = 8;
+                                        if (nanoBots.focus != target) consola->addLinea("Asignando NanoBots de reparacion: Satelite de Posicionamiento");
                                     } else if (sat2.hp < (sat2.hpMax * nanoBots.limitMax)/100)
                                         {
                                             target = 9;
+                                            if (nanoBots.focus != target) consola->addLinea("Asignando NanoBots de reparacion: Satelite de Reconocimiento");
                                         } else if (arma_S.hp < (arma_S.hpMax * nanoBots.limitMax)/100)
                                             {
                                                 target = 10;
+                                                if (nanoBots.focus != target) consola->addLinea("Asignando NanoBots de reparacion: Armamento Secundario");
                                             } 
 
-    cout << "\nbots target: " << target << endl;
+    
 
             /* focus switch list:
             0: inactive
@@ -623,7 +717,7 @@ void NavePj::setPropulsion(int signo){
     }else propulsion -= 0.2;
     if (propulsion > 20) propulsion = 20;
     if (propulsion < 0) propulsion = 0;
-    cout << "\n propulsion " <<  propulsion << " = " << (propulsion*100)/20 << endl;
+    
 
 }
 
@@ -686,15 +780,63 @@ int NavePj::getHp(){
 
 //----------------mandos del avion:
 void NavePj::yaw(int signo){                 //yaw
-   naveNodo->yaw(Radian(signo*0.01));
+   
+   if (signo < 1)
+   {
+       if (ala_I.func){
+
+        naveNodo->yaw(Radian(signo*0.01));
+        //_animState = naveEnt->getAnimationState("rotIzq"); 
+        //_animState->setEnabled(true);
+        //_animState->loop(false);
+    }
+   } else if (ala_D.func) naveNodo->yaw(Radian(signo*0.01));
+   
 }
 
 void NavePj::pitch(int signo){               //pitch
-   naveNodo->pitch(Radian(signo*0.001));
+    
+    
+    if (signo < 1)
+   {
+       if (prop_P.func) naveNodo->pitch(Radian(signo*0.001));
+   } else if (prop_P.func) naveNodo->pitch(Radian(signo*0.001));
+
+    //rigidBody->forceActivationState ();
+    //rigidBody->getBulletRigidBody()->applyTorqueImpulse(btVector3(signo*300, 0, 0));
+    //rigidBody->transform->appendRotation(30, (signo,0,0));
 }
 
-void NavePj::roll(int signo){                //roll
-   naveNodo->roll(Radian(signo*0.001));
+void NavePj::roll(int signo){ 
+   //rigidBody->getBulletRigidBody()->applyTorqueImpulse(btVector3(1,300,1));            //roll
+   
+    //MyMotionState* fallMotionState = new MyMotionState(btTransform(btQuaternion(0,30,0,30),btVector3(56,10,0)),naveNodo);
+    //rigidBody->forceActivationState ();
+    //rigidBody->getBulletRigidBody()->setAngularFactor(300);
+    //rigidBody->getBulletRigidBody()->applyTorque(btVector3(0, 0, signo*300));
+   if (signo < 1)
+   {
+       if (prop_S.func) naveNodo->roll(Radian(signo*0.001));
+   } else if (prop_S.func) naveNodo->roll(Radian(signo*0.001));
+
+
+   //naveNodo->roll(Radian(signo*0.001));
+   
+
+   //_world->updateTransform();
+
+    //btTransform trans;
+    //trans.setRotation(btQuaternion(0,signo,0,10));
+
+
+    //OgreToBullet(naveNodo,rigidBody->getBulletRigidBody(),trans);
+}
+
+void NavePj::Mouse(int x, int y){
+
+    rigidBody->getBulletRigidBody()->applyTorqueImpulse(btVector3(y*0.03, 0, x*0.03));
+
+
 }
 
 
@@ -703,6 +845,20 @@ void NavePj::roll(int signo){                //roll
 
 
 
+/*
+void NavePj::BulletToOgre(btRigidBody* body,btTransform &trans,MyMotionState* motionstate)     
+   {
+      body->getMotionState()->getWorldTransform(trans);
+      mymotionstate->setWorldTransform(trans);
+      body->getMotionState()->setWorldTransform(trans);
+   }
 
-
-
+void NavePj::OgreToBullet(SceneNode* node,btRigidBody* body,btTransform& trans)     
+   {
+      Vector3 position = node->_getDerivedPosition();
+      Quaternion quat = node->_getDerivedOrientation();
+      trans.setIdentity();
+      trans.setOrigin(btVector3(position.x,position.y,position.z));
+      trans.setRotation(btQuaternion(quat.x,quat.y,quat.z,quat.w));
+      body->setWorldTransform(trans);
+   }*/

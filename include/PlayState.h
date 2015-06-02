@@ -6,6 +6,7 @@
 #include "player.h"
 #include "planeta.h"
 #include "yisus.h"
+#include "AnimationBlender.h"
 
 #include "GameState.h"
 #include <CEGUI/RendererModules/Ogre/CEGUIOgreRenderer.h>
@@ -97,6 +98,7 @@ class PlayState : public Ogre::Singleton<PlayState>, public GameState
   Ogre::Viewport* _viewport;  
   Ogre::OverlayManager* _overlayManager;
   Ogre::AnimationState *_animState;
+  AnimationBlender *_animBlender;
   Ogre::Camera* _camera;
   Ogre::Camera* auxCam;
   int _numEntities;

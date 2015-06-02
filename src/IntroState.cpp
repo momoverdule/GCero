@@ -73,7 +73,7 @@ _root = Ogre::Root::getSingletonPtr();
   luna->attachObject(ent);
   luna->setPosition(150,20,300);
   luna->pitch(Degree(-15));
-  luna->yaw(Degree(-90));
+  luna->yaw(Degree(-75));
 
 
   origin = _sceneMgr->createSceneNode();
@@ -102,7 +102,7 @@ _root = Ogre::Root::getSingletonPtr();
   _sceneMgr->setShadowTextureSize(512);
   light->setType(Ogre::Light::LT_POINT);
   light->setSpotlightFalloff(200000.0f);
-  //light->setCastShadows(true);
+
 
 
 

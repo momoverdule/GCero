@@ -50,6 +50,7 @@ public:
 
     void createNavePj(SceneNode* node, Entity* entity, NavePj* nave);
     SceneNode* addPlaneta(int tipoPlaneta ,Vector3 pos);
+    SceneNode* addAsteroide(Vector3 pos);
     void createGalaxy(Vector3 pos ,int planetasNum);
     void disparar(Quaternion ori,Vector3 pos,Vector3 dir,int speed);
     int _numEntities;

@@ -97,7 +97,7 @@ Yisus::Yisus(){
   rigidBody->setShape(node, bodyShape
          ,0.1 /*Restitucion*/ 
        ,0.5   /*Friccion */
-       ,0   /*Masa*/ 
+       ,10  /*Masa*/ 
        ,node->_getDerivedPosition()   /*Posicion inicial*/ 
        ,Quaternion(0,0,0,1) /* Orientacion*/ );
 
@@ -106,6 +106,7 @@ Yisus::Yisus(){
     
     _naveShapes.push_back(bodyShape);   _naveBodies.push_back(rigidBody);
       
+    //rigidBody->enableActiveState ();
 
     rigidBody->getBulletRigidBody()->setCollisionFlags( rigidBody->getBulletRigidBody()->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
     rigidBody->getBulletRigidBody()->setActivationState( DISABLE_DEACTIVATION );
@@ -195,6 +196,11 @@ SceneNode* Yisus::addPlaneta(int tipoPlaneta ,Vector3 pos) {
   //entity->setQueryFlags(PELOTA);
   SceneNode *node = _sceneMgr->createSceneNode("planeta" + StringConverter::toString(_numEntities));
   node->attachObject(entity);
+
+  if (tipoPlaneta == 4) {
+    ParticleSystem* ps = _sceneMgr->createParticleSystem("rS" + StringConverter::toString(_numEntities) ,"redSmoke");  
+    node->attachObject(ps);
+  }
   
 
   OgreBulletCollisions::SphereCollisionShape *ballShape = 
@@ -232,15 +238,21 @@ _sceneMgr->getRootSceneNode()->addChild(galaxia);
 galaxia->setPosition(pos);
 
 //crear Sol:
-Planeta* sol = new Planeta(addPlaneta(0,pos),0, "Minus" );
+Planeta* sol = new Planeta(addPlaneta(0,pos),0, "Minus"+ StringConverter::toString(_numEntities) );
 galaxia->addChild(sol->getNode());
 _planetas.push_back(sol); 
 
 
-Ogre::SceneNode* nodeL = _sceneMgr->createSceneNode("luces"); 
-Ogre::Light* light = _sceneMgr->createLight("lightSol");
+Ogre::SceneNode* nodeL = _sceneMgr->createSceneNode("luces"+ StringConverter::toString(_numEntities)); 
+Ogre::Light* light = _sceneMgr->createLight("lightSol"+ StringConverter::toString(_numEntities));
 nodeL->attachObject(light);
 sol->getNode()->addChild(nodeL);
+
+ //particulas del sol
+ParticleSystem* ps = _sceneMgr->createParticleSystem("Ps"+ StringConverter::toString(_numEntities),"sol");  
+sol->getNode()->attachObject(ps);
+
+SceneNode* aux;
 
 _sceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 _sceneMgr->setShadowColour(Ogre::ColourValue(0.5, 0.5, 0.5) );
@@ -249,7 +261,7 @@ _sceneMgr->setShadowTextureCount(2);
 _sceneMgr->setShadowTextureSize(512);
 light->setType(Ogre::Light::LT_POINT);
 light->setSpotlightFalloff(200000.0f);
-//light->setCastShadows(true);
+light->setCastShadows(true);
 
 int i,j,k;
 Planeta* pNodo;
@@ -306,13 +318,14 @@ for (i = 0; i < planetasNum; ++i)
     }
   }
 
-  pNodo = new Planeta(addPlaneta(((rand()%5)+1),poss),1, "Planeta" );
+  pNodo = new Planeta(addPlaneta(((rand()%5)+1),galaxia->_getDerivedPosition() + poss),1, "Planeta" );
   planeta =  _sceneMgr->createSceneNode();
   galaxia->addChild(planeta);
   planeta->addChild(pNodo->getNode());
   //planeta->setAutoTracking(true,galaxia,Vector3::NEGATIVE_UNIT_Y);
   planeta->setDirection(mezclado);
 
+  
   //pNodo->getNode()->setDirection(mezclado*-1);
   //planeta->setDirection(mezclado*-1);
 
@@ -320,7 +333,7 @@ for (i = 0; i < planetasNum; ++i)
   planeta->rotate(Quaternion(Ogre::Degree((rand()%361)), (mezclado)),Node::TS_PARENT);
 
   //creando lunas:
-  distance2 = 800;
+  distance2 = 900;
 
   k = rand()%5; //cantidad de lunas
   for (j = 0; j < k; ++j)
@@ -355,10 +368,22 @@ for (i = 0; i < planetasNum; ++i)
       }
     }
     
-    pNodo2 = new Planeta(addPlaneta((rand()%5+6),poss),2, "luna" );  
-    pNodo2->getNode()->translate(mezclado2);
-    planeta->addChild(pNodo2->getNode());   
+    pNodo2 = new Planeta(addPlaneta((rand()%5+6),galaxia->_getDerivedPosition() + poss),2, "luna" );  
+    pNodo2->getNode()->setPosition(galaxia->_getDerivedPosition() +pos);
+    aux = pNodo->getNode()->createChildSceneNode();
+    //aux->setPosition(poss);
+    
+    
+    aux->addChild(pNodo2->getNode());   
     pNodo2->getNode()->setDirection(mezclado2*-1);
+
+    aux->pitch(Degree((rand()%361)));
+    aux->rotate(Quaternion(Ogre::Degree((rand()%361)), (mezclado)),Node::TS_PARENT);
+    pNodo2->getNode()->translate(mezclado2);
+    
+
+  
+
     //planeta->roll(Degree((rand() %361)),Node::TS_LOCAL);      //desorbitar
     //planeta->setDirection(mezclado*-1);
     distance2 += 200;
@@ -366,7 +391,7 @@ for (i = 0; i < planetasNum; ++i)
     cout << "\n luna creada" << endl;
   }
 
-  distance += 5500;
+  distance += 4500;
   pNodo->orbita = pNodo->orbita / ((i*1.5)+1);
   _planetas.push_back(pNodo);
   _orbitas.push_back(planeta);
@@ -420,7 +445,7 @@ void Yisus::disparar(Quaternion ori,Vector3 pos,Vector3 dir,int speed){
                 rigidBox->setOrientation(btQ);
 
                  //MyMotionState* fallMotionState = new MyMotionState(btTransform(btQ,btV2),node);
-               rigidBox->setLinearVelocity( dir * (600+(speed*50)));
+               rigidBox->setLinearVelocity( dir * (900+(speed*50)));
                node->setDirection(dir);
                
 
@@ -452,4 +477,42 @@ Yisus* Yisus::summonYisus(){
  { 
   if (!yisus_) yisus_ = new Yisus();
   return yisus_;            }
+}
+
+
+//--------------ADD PlANETA
+SceneNode* Yisus::addAsteroide(Vector3 pos) {
+
+ float radio;
+ radio = 25;
+  
+
+  Entity *entity = _sceneMgr->createEntity("asteoride" + StringConverter::toString(_numEntities),"asteroide.mesh");
+  //entity->setQueryFlags(PELOTA);
+  SceneNode *node = _sceneMgr->createSceneNode("asteroide" + StringConverter::toString(_numEntities));
+  node->attachObject(entity);
+
+
+  OgreBulletCollisions::SphereCollisionShape *ballShape = 
+    new OgreBulletCollisions::SphereCollisionShape(radio);
+
+  OgreBulletDynamics::RigidBody *rigidBall = new 
+    OgreBulletDynamics::RigidBody("asteoideRigid" + 
+      StringConverter::toString(_numEntities), _world);
+  
+  
+    rigidBall->setShape(node, ballShape,
+         0.1 /*Restitucion*/ , 1  /*Friccion */,
+         0  /*Masa*/ , pos  /*Posicion inicial*/ ,
+         Quaternion(0,0,0,1) /* Orientacion*/ );
+  
+  // Anadimos los objetos a las deques
+  _shapes.push_back(ballShape);   _bodies.push_back(rigidBall); 
+
+  node->setDirection(1,0,0);
+  rigidBall->getBulletRigidBody()->setCollisionFlags( rigidBall->getBulletRigidBody()->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
+  rigidBall->getBulletRigidBody()->setActivationState( DISABLE_DEACTIVATION );
+
+  _numEntities++;
+  return node;
 }

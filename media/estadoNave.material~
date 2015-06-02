@@ -1,0 +1,299 @@
+
+material casco
+{
+ technique 
+ {
+   pass 
+   {
+     scene_blend src_alpha one_minus_src_alpha
+     texture_unit 
+     {
+       texture cascoA.png
+     }
+   }
+ }
+}
+material cascoN
+{
+ technique 
+ {
+   pass 
+   {
+     scene_blend src_alpha one_minus_src_alpha
+     texture_unit 
+     {
+       texture cascoN.png
+     }
+   }
+ }
+}
+material cascoR
+{
+ technique 
+ {
+   pass 
+   {
+     scene_blend src_alpha one_minus_src_alpha
+     texture_unit 
+     {
+       texture cascoR.png
+     }
+   }
+ }
+}
+
+
+material gen
+{
+ technique 
+ {
+   pass 
+   {
+     scene_blend src_alpha one_minus_src_alpha
+     texture_unit 
+     {
+       texture genA.png
+     }
+   }
+ }
+}
+material genN
+{
+ technique 
+ {
+   pass 
+   {
+     scene_blend src_alpha one_minus_src_alpha
+     texture_unit 
+     {
+       texture genN.png
+     }
+   }
+ }
+}
+material genR
+{
+ technique 
+ {
+   pass 
+   {
+     scene_blend src_alpha one_minus_src_alpha
+     texture_unit 
+     {
+       texture genR.png
+     }
+   }
+ }
+}
+
+
+material alaIzq
+{
+ technique 
+ {
+   pass 
+   {
+     scene_blend src_alpha one_minus_src_alpha
+     texture_unit 
+     {
+       texture alaIzqA.png
+     }
+   }
+ }
+}
+material alaIzqN
+{
+ technique 
+ {
+   pass 
+   {
+     scene_blend src_alpha one_minus_src_alpha
+     texture_unit 
+     {
+       texture alaIzqN.png
+     }
+   }
+ }
+}
+material alaIzqR
+{
+ technique 
+ {
+   pass 
+   {
+     scene_blend src_alpha one_minus_src_alpha
+     texture_unit 
+     {
+       texture alaIzqR.png
+     }
+   }
+ }
+}
+
+
+material alaDer
+{
+ technique 
+ {
+   pass 
+   {
+     scene_blend src_alpha one_minus_src_alpha
+     texture_unit 
+     {
+       texture alaDerA.png
+     }
+   }
+ }
+}
+material alaDerN
+{
+ technique 
+ {
+   pass 
+   {
+     scene_blend src_alpha one_minus_src_alpha
+     texture_unit 
+     {
+       texture alaDerN.png
+     }
+   }
+ }
+}
+material alaDerR
+{
+ technique 
+ {
+   pass 
+   {
+     scene_blend src_alpha one_minus_src_alpha
+     texture_unit 
+     {
+       texture alaDerR.png
+     }
+   }
+ }
+}
+
+
+material comp
+{
+ technique 
+ {
+   pass 
+   {
+     scene_blend src_alpha one_minus_src_alpha
+     texture_unit 
+     {
+       texture compA.png
+     }
+   }
+ }
+}
+material compN
+{
+ technique 
+ {
+   pass 
+   {
+     scene_blend src_alpha one_minus_src_alpha
+     texture_unit 
+     {
+       texture compN.png
+     }
+   }
+ }
+}
+material compR
+{
+ technique 
+ {
+   pass 
+   {
+     scene_blend src_alpha one_minus_src_alpha
+     texture_unit 
+     {
+       texture compR.png
+     }
+   }
+ }
+}
+
+
+material propP
+{
+ technique 
+ {
+   pass 
+   {
+     scene_blend src_alpha one_minus_src_alpha
+     texture_unit 
+     {
+       texture propPA.png
+     }
+   }
+ }
+}
+material propPN
+{
+ technique 
+ {
+   pass 
+   {
+     scene_blend src_alpha one_minus_src_alpha
+     texture_unit 
+     {
+       texture propPN.png
+     }
+   }
+ }
+}
+material propPR
+{
+ technique 
+ {
+   pass 
+   {
+     scene_blend src_alpha one_minus_src_alpha
+     texture_unit 
+     {
+       texture propPR.png
+     }
+   }
+ }
+}
+
+
+material propS
+{
+ technique 
+ {
+   pass 
+   {
+     scene_blend src_alpha one_minus_src_alpha
+     texture_unit 
+     {
+       texture propSA.png
+     }
+   }
+ }
+}
+
+material xWing
+{
+ technique 
+ {
+   pass 
+   {
+     scene_blend src_alpha one_minus_src_alpha
+     texture_unit 
+     {
+       texture xWing.png
+     }
+   }
+ }
+}
+
+
+
+
+

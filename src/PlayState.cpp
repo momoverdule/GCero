@@ -173,10 +173,14 @@ PlayState::resume()
 bool PlayState::frameStarted(const Ogre::FrameEvent& evt)
 {
 
+
+  
   deltaT = evt.timeSinceLastFrame;
   int fps = 1.0 / deltaT;
   CEGUI::System::getSingleton().injectTimePulse(deltaT);
-
+  
+   //actualizar figuras
+  player->nave->calculate(deltaT);
 
 
   yisus->_world->stepSimulation(deltaT); // Actualizar simulacion Bullet
@@ -201,10 +205,11 @@ bool PlayState::frameStarted(const Ogre::FrameEvent& evt)
   oe = _overlayManager->getOverlayElement("hpInfo");
   oe->setCaption("Estado de nave:  " + StringConverter::toString(player->nave->getHp() ));
   oe = _overlayManager->getOverlayElement("enerInfo");
-  oe->setCaption("Energia:         " + StringConverter::toString(player->nave->getEner() ));    
+  oe->setCaption("Energia:      " + StringConverter::toString(player->nave->getEner() ));    
   oe = _overlayManager->getOverlayElement("propInfo");
   oe->setCaption("Propulsores:     " + StringConverter::toString(player->nave->getProp() ));
-  
+  oe = _overlayManager->getOverlayElement("chatInfo");
+  oe->setCaption(player->nave->consola->screen());
 
 
 
@@ -214,12 +219,12 @@ bool PlayState::frameStarted(const Ogre::FrameEvent& evt)
  if (rotacion_Flag){
  //rotacion de los planetas
   std::deque <Planeta *>::iterator
-  itPlaneta = _planetas.begin();
-  while (_planetas.end() != itPlaneta) {
+  itPlaneta = yisus->_planetas.begin();
+  while (yisus->_planetas.end() != itPlaneta) {
 
-    (*itPlaneta)->getNode()->yaw(Radian(((*itPlaneta)->rotacion * deltaT)/5),Node::TS_PARENT);   //rotar-
+    (*itPlaneta)->getNode()->yaw(Radian(((*itPlaneta)->rotacion * deltaT)/5),Node::TS_PARENT);   //rotar
     if ((*itPlaneta)->tipo == 2)(*itPlaneta)->getNode()->getParent()->yaw(Radian(((*itPlaneta)->orbita * deltaT)/5),Node::TS_LOCAL);      //orbitar
-    if ((*itPlaneta)->tipo == 1) (*itPlaneta)->getNode()->yaw(Radian(((*itPlaneta)->orbita * -deltaT)/2),Node::TS_LOCAL);      //orbitar
+    if ((*itPlaneta)->tipo == 1) (*itPlaneta)->getNode()->getParent()->yaw(Radian(((*itPlaneta)->orbita * -deltaT)/2),Node::TS_LOCAL);      //orbitar
 
     ++itPlaneta;
   }
@@ -268,8 +273,6 @@ bool PlayState::frameEnded(const Ogre::FrameEvent& evt)
   if (_exitGame)
     return false;
 
-   //actualizar figuras
-  player->nave->calculate(deltaT);
 
 
   
@@ -290,12 +293,20 @@ void PlayState::keyPressed(const OIS::KeyEvent &e)
   }
 
   if (e.key == OIS::KC_1) {
-    _viewport->setCamera(_camera);
+        _viewport->setCamera(_camera);
+        Ogre::Overlay *overlay = _overlayManager->getByName("estadoInfo");
+        overlay->hide();
+        overlay = _overlayManager->getByName("pcChat");
+        overlay->hide();
   }
 
 
   if (e.key == OIS::KC_2) {
-        player->nave->setCamP();  
+        player->nave->setCamP();
+        Ogre::Overlay *overlay = _overlayManager->getByName("estadoInfo");
+        overlay->show();
+        overlay = _overlayManager->getByName("pcChat");
+        overlay->show();  
   }
 
   if (e.key == OIS::KC_3) {
@@ -310,7 +321,14 @@ void PlayState::keyPressed(const OIS::KeyEvent &e)
     player->nave->aplicarDmg(17);
   } 
 
-  if (e.key == OIS::KC_Z) {
+  if (e.key == OIS::KC_R) {
+    //_animBlender->blend("rotDer", AnimationBlender::Blend, 0.5, false);
+    //_animState->setTimePosition(0.0);
+    //_animState->setEnabled(true);
+    //_animState->setLoop(true);
+    _sceneMgr->clearScene();
+    init();
+
 
   } 
 
@@ -392,8 +410,8 @@ void PlayState::mouseMoved(const OIS::MouseEvent &e)
     int posz = e.state.Z.rel;
     //_camera->yaw(Ogre::Radian(-posx*0.0003));
     //_camera->pitch(Ogre::Radian(-posy*0.0003));
-    if (posy != 0)player->nave->roll(-posy);
-    if (posx != 0)player->nave->pitch(posx);
+   player->nave->roll(-posy);
+   player->nave->pitch(posx);
     if (posz != 0)player->nave->setPropulsion(posz);
 
 }
@@ -467,6 +485,10 @@ void PlayState::init(){
   overlay->show();
   overlay = _overlayManager->getByName("pcChat");
   overlay->show();
+  overlay = _overlayManager->getByName("backCam");
+  overlay->show();
+
+
 
 
 
@@ -497,6 +519,11 @@ void PlayState::init(){
   player->nave->setViewPort(_viewport);
   player->nave->getPCam()->setAspectRatio(_camera->getAspectRatio());
   yisus->createNavePj(player->nave->getNode(),player->nave->getEntity(),player->nave);
+  //_animBlender = new AnimationBlender(player->nave->getEntity());
+  //_animState = player->nave->getEntity()->getAnimationState("rotDer");
+  //_animState->setEnabled(false);
+  
+
 
   keyD_Flag=false;
   keyA_Flag=false;
@@ -517,7 +544,8 @@ void PlayState::init(){
 
 
 
-  yisus->createGalaxy(Vector3(0,0,0),15);  //----------------------- crear sistema solar 
+  yisus->createGalaxy(Vector3(0,0,0),20);  //----------------------- crear sistema solar 
+  yisus->createGalaxy(Vector3(10000,10000,10000),10);
 
 
 
@@ -575,7 +603,7 @@ void PlayState::init(){
 
   player->nave->setCamP();
 
-
+  cout << "\n saliendo de init" << endl;  
 }
 
 

@@ -6,6 +6,8 @@
 #include "Utils/OgreBulletCollisionsMeshToShapeConverter.h"
 #include "Shapes/OgreBulletCollisionsConvexHullShape.h"
 #include <OgreBulletDynamicsRigidBody.h>
+#include "MyMotionState.h"
+#include "chatPc.h"
 
 
 using namespace std;
@@ -141,6 +143,7 @@ private:
     Arma_S arma_S;
     Defensas defensas;
     NanoBots nanoBots;
+    
 
     //funciones relacionadas con el tiempo:
     void generateEner(Ogre::Real deltaT);
@@ -148,6 +151,11 @@ private:
     int setNanoBotsTarget();
     void propulsores();
     int hpActual();
+
+    void BulletToOgre(btRigidBody* body,btTransform &trans,MyMotionState* motionstate);
+    void OgreToBullet(SceneNode* node,btRigidBody* body,btTransform& trans);     
+     
+
 
     //punteros graficos:
     Ogre::SceneNode* naveNodo;
@@ -164,6 +172,7 @@ private:
  	Ogre::Light* luzDelantera;
  	Ogre::Light* luzProp1;
  	Ogre::Light* luzProp2;
+ 	Ogre::OverlayManager* _overlayManager;
 
 
 
@@ -207,6 +216,8 @@ public:
     //void gestorComputadora();
     void calculate(Ogre::Real deltaT);
     void aplicarDmg(int dmg);
+    chatPc *consola;
+    Ogre::AnimationState *_animState;
 
 
     //mandos del avion
@@ -214,6 +225,7 @@ public:
     void pitch(int signo);
     void roll(int signo);
     void lateral(int signo);
+    void Mouse(int x, int y);
     void lazerDer();
     void lazerIzq();
 

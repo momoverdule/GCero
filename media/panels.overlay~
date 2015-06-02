@@ -3,16 +3,16 @@ template element TextArea(letraAmarilla)
     font_name Blue
 		metrics_mode relative
 		char_height 0.012
-		colour 1.0 1.0 0.0    
+		colour 1.0 0.8 0.0    
 }
 
 
-template element TextArea(LetrasJuego)
+template element TextArea(letraChat)
 {
     font_name Blue
 		metrics_mode relative
-		char_height 0.013
-		colour 1.0 1.0 1.0    
+		char_height 0.017
+		colour 1.0 1.0 0.1    
 }
 
 estadoInfo
@@ -30,24 +30,123 @@ estadoInfo
 	material panel
 	
 
-		    element TextArea(hpInfo) : letraAmarilla 
+		    element TextArea(hpInfo) : letraChat 
 		    {
-				  top 0.03
-				  left 0.11
+				  top 0.02
+				  left 0.10
 		    }
 		    
-		    element TextArea(enerInfo) : letraAmarilla 
+		    element TextArea(enerInfo) : letraChat 
 		    {	
-				  top 0.05
+				  top 0.04
 				  left 0.11	 
 		    }
 		    
-		    element TextArea(propInfo) : letraAmarilla 
+		    element TextArea(propInfo) : letraChat 
 		    {
-				  top 0.07
-				  left 0.11	 
+				  top 0.06
+				  left 0.10	 
 		    }
 		    
+		    
+		    
+		     container Panel(estadoNave) 
+  			{
+ 				metrics_mode relative
+        			left 0.007
+        			top 0.025
+        			width 0.08
+        			height 0.125
+        			vert_align top
+        			horz_align left
+        			
+        			
+        			element Panel(casco) 
+  				{
+ 				metrics_mode relative
+        			left 0
+        			top 0
+        			width 0.08
+        			height 0.125
+        			vert_align top
+        			horz_align left
+        			material casco
+		   		}
+		   		
+		   		element Panel(gen) 
+  				{
+ 				metrics_mode relative
+        			left 0
+        			top 0
+        			width 0.08
+        			height 0.125
+        			vert_align top
+        			horz_align left
+        			material gen
+		   		}
+		   		
+		   		element Panel(comp) 
+  				{
+ 				metrics_mode relative
+        			left 0
+        			top 0
+        			width 0.08
+        			height 0.125
+        			vert_align top
+        			horz_align left
+        			material comp
+		   		}
+        			
+        			element Panel(alaIzq) 
+  				{
+ 				metrics_mode relative
+        			left 0
+        			top 0
+        			width 0.08
+        			height 0.125
+        			vert_align top
+        			horz_align left
+        			material alaIzq
+		   		}
+        			
+        			element Panel(alaDer) 
+  				{
+ 				metrics_mode relative
+        			left 0
+        			top 0
+        			width 0.08
+        			height 0.125
+        			vert_align top
+        			horz_align left
+        			material alaDer
+		   		}
+		   		
+		   		element Panel(propP) 
+  				{
+ 				metrics_mode relative
+        			left 0
+        			top 0
+        			width 0.08
+        			height 0.125
+        			vert_align top
+        			horz_align left
+        			material propP
+		   		}
+        			
+        			element Panel(propS) 
+  				{
+ 				metrics_mode relative
+        			left 0
+        			top 0
+        			width 0.08
+        			height 0.125
+        			vert_align top
+        			horz_align left
+        			material propS
+		   		}
+        			
+        			
+		   	}
 		    
     }
     
@@ -67,6 +166,33 @@ pcChat
         vert_align top
         horz_align left
 	material panel
+		    element TextArea(chatInfo) : letraChat
+		    {
+				  top 0.01
+				  left 0.01	 
+		    }
     }
 }
+
+backCam
+{
+
+    container Panel(backCam) 
+    {
+ 	metrics_mode relative
+        left 0.798
+        top 0.795
+        width 0.195
+        height 0.198
+        vert_align top
+        horz_align left
+	material panel
+    }
+}
+
+
+
+
+
+
 

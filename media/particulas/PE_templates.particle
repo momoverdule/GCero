@@ -1,0 +1,27 @@
+particle_system ringOfFire
+{
+	quota	1000
+	material	explosion
+	particle_width	10
+	particle_height	10
+
+	emitter Ring
+	{
+		angle	10
+		direction	0 1 0
+		emission_rate	250
+		velocity_min	3
+		velocity_max	11
+		time_to_live	3
+		width	30
+		height	30
+		depth	1
+	}
+
+	affector ColourFader
+	{
+		red	-0.5
+		green	-0.5
+		blue	-0.25
+	}
+}

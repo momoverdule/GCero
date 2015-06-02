@@ -6,19 +6,19 @@
 
 using namespace Ogre;
 
-class MyMotionState : public btMotionState {
+class MyMotionState : public btMotionState
+{
+public:
+   MyMotionState(const btTransform &initialpos,Ogre::SceneNode *node);
+   ~MyMotionState();
+   void setNode(Ogre::SceneNode* node);
+   virtual void getWorldTransform(btTransform& worldTrans )const;
+   virtual void setWorldTransform(const btTransform& worldTrans);
+   void updateTransform(btTransform& newpos);
 
 protected:
-	Ogre::SceneNode* _visibleobj;
-	btTransform _pos;
-
-public:
-	MyMotionState(const btTransform &initialpos,
-	Ogre::SceneNode* node);
-	virtual ~MyMotionState();
-	void setNode(Ogre::SceneNode* node);
-	virtual void getWorldTransform(btTransform &worldTr) const;
-	virtual void setWorldTransform(const btTransform &worldTr);
-
+   Ogre::SceneNode* mVisibleobj;
+   btTransform mPos1;
 };
+
 #endif

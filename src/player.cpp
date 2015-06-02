@@ -6,6 +6,12 @@ using namespace std;
 using namespace Ogre;
 
 Player::Player(){
-	nave = new NavePj(1000,500,Vector3(0,32800,0));
+	nave = new NavePj(1000,500,Vector3(32800,0,0));
+
+}
+
+
+Player::~Player(){
+	delete nave;
 
 }
