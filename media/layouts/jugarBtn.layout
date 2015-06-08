@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GUILayout>
+       
+              <!-- Jugar -->
+    <Window Type="TaharezLook/Button" Name="menuP/jugar">
+      <Property Name="Text" Value="   Nueva Partida" />
+      <Property Name="UnifiedAreaRect" Value="{{0.75,0},{0.3,0},{1,0},{0.4,0}}"/>
+    </Window>
+	
+</GUILayout>

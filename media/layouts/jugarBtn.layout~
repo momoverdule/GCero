@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GUILayout>
+       
+              <!-- Jugar -->
+    <Window Type="TaharezLook/Button" Name="menuP/jugar">
+      <Property Name="Text" Value="   Nueva Partida" />
+      <!--<Property Name="TextAlign" value="Left VCenter"/> -->
+      <Property name="InheritsAlpha"              value="False" />
+      <Property Name="Alpha" value="0.85"/>
+      <!--<Property Name="Colour" value="0.0175439 0.677632 1"/> -->
+      <!--<Property Name="TextColour" value="0.982867 1 0.122807"/>-->
+      <!--<Property Name="FontHeight" value="30"/>-->
+      <Property Name="UnifiedAreaRect" Value="{{0.75,0},{0.3,0},{1,0},{0.4,0}}"/>
+    </Window>
+	
+</GUILayout>

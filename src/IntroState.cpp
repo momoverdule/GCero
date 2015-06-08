@@ -112,6 +112,7 @@ _root = Ogre::Root::getSingletonPtr();
 void
 IntroState::exit()
 {
+
   _sceneMgr->clearScene();
   _root->getAutoCreatedWindow()->removeAllViewports();
 }
@@ -131,6 +132,8 @@ IntroState::frameStarted
 (const Ogre::FrameEvent& evt) 
 {
   float deltaT = evt.timeSinceLastFrame;
+  CEGUI::System::getSingleton().injectTimePulse(deltaT);
+  
   luna->yaw(Radian(0.1*deltaT)); 
   planeta->yaw(Radian(0.07*deltaT)); 
   origin->yaw(Radian(0.01*deltaT));
@@ -140,8 +143,7 @@ IntroState::frameStarted
   return true;
 }
 
-bool
-IntroState::frameEnded
+bool IntroState::frameEnded
 (const Ogre::FrameEvent& evt)
 {
   if (_exitGame)
@@ -150,19 +152,23 @@ IntroState::frameEnded
   return true;
 }
 
-void
-IntroState::keyPressed
+void IntroState::keyPressed
 (const OIS::KeyEvent &e)
 {
+
+  CEGUI::System::getSingleton().injectKeyDown(e.key);
+  CEGUI::System::getSingleton().injectChar(e.text);
   // Transición al siguiente estado.
   // Espacio --> PlayState
   if (e.key == OIS::KC_SPACE) {
+    CEGUI::Window* sheet = CEGUI::System::getSingleton().getGUISheet();
+    sheet->getChild("menuP")->hide();
+    CEGUI::MouseCursor::getSingleton().hide();
     changeState(PlayState::getSingletonPtr());
   }
 }
 
-void
-IntroState::keyReleased
+void IntroState::keyReleased
 (const OIS::KeyEvent &e )
 {
   if (e.key == OIS::KC_ESCAPE) {
@@ -170,22 +176,43 @@ IntroState::keyReleased
   }
 }
 
-void
-IntroState::mouseMoved
+void IntroState::mouseMoved
 (const OIS::MouseEvent &e)
 {
+  CEGUI::System::getSingleton().injectMouseMove(e.state.X.rel, e.state.Y.rel); 
+
 }
 
 void
-IntroState::mousePressed
-(const OIS::MouseEvent &e, OIS::MouseButtonID id)
+IntroState::mousePressed (const OIS::MouseEvent &e, OIS::MouseButtonID id)
 {
+  CEGUI::System::getSingleton().injectMouseButtonDown(convertMouseButton(id));
 }
 
 void
-IntroState::mouseReleased
-(const OIS::MouseEvent &e, OIS::MouseButtonID id)
+IntroState::mouseReleased (const OIS::MouseEvent &e, OIS::MouseButtonID id)
 {
+  CEGUI::System::getSingleton().injectMouseButtonUp(convertMouseButton(id));
+}
+
+CEGUI::MouseButton IntroState::convertMouseButton(OIS::MouseButtonID id)
+{
+  CEGUI::MouseButton ceguiId;
+  switch(id)
+    {
+    case OIS::MB_Left:
+      ceguiId = CEGUI::LeftButton;
+      break;
+    case OIS::MB_Right:
+      ceguiId = CEGUI::RightButton;
+      break;
+    case OIS::MB_Middle:
+      ceguiId = CEGUI::MiddleButton;
+      break;
+    default:
+      ceguiId = CEGUI::LeftButton;
+    }
+  return ceguiId;
 }
 
 IntroState*
@@ -220,10 +247,60 @@ void IntroState::createCGui(){
   CEGUI::Window* sheet = CEGUI::WindowManager::getSingleton().createWindow("DefaultWindow","Sheet");
   
   
+  CEGUI::MouseCursor::getSingleton().show();
+  
+  //MenuPrincipal
+  CEGUI::Window* menuP = CEGUI::WindowManager::getSingleton().createWindow("DefaultWindow","menuP");
+  sheet->addChildWindow(menuP);
 
+  //Play button
+  CEGUI::Window* jugar = CEGUI::WindowManager::getSingleton().loadWindowLayout("jugarBtn.layout");
+  menuP->addChildWindow(jugar);
+  CEGUI::Window* jugarBtn = CEGUI::WindowManager::getSingleton().getWindow("menuP/jugar");
+  jugarBtn->subscribeEvent(CEGUI::PushButton::EventClicked,CEGUI::Event::Subscriber(&IntroState::Play,this));
+  jugar->addChildWindow(jugarBtn);
 
+  //Load button
+  CEGUI::Window* load = CEGUI::WindowManager::getSingleton().loadWindowLayout("loadBtn.layout");
+  menuP->addChildWindow(load);
 
+  //Scores button
+  CEGUI::Window* scores = CEGUI::WindowManager::getSingleton().loadWindowLayout("scoresBtn.layout");
+  menuP->addChildWindow(scores);
+
+  //Instrucciones button
+  CEGUI::Window* inst = CEGUI::WindowManager::getSingleton().loadWindowLayout("instruccionesBtn.layout");
+  menuP->addChildWindow(inst);
+
+  //Creditos button
+  CEGUI::Window* creditos = CEGUI::WindowManager::getSingleton().loadWindowLayout("creditosBtn.layout");
+  menuP->addChildWindow(creditos);
+
+  //Salir button
+  CEGUI::Window* salir = CEGUI::WindowManager::getSingleton().loadWindowLayout("salirBtn.layout");
+  menuP->addChildWindow(salir);
+  CEGUI::Window* salirBtn = CEGUI::WindowManager::getSingleton().getWindow("menuP/salir");
+  salirBtn->subscribeEvent(CEGUI::PushButton::EventClicked,CEGUI::Event::Subscriber(&IntroState::Salir,this));
+  salir->addChildWindow(salirBtn);
 
   
   CEGUI::System::getSingleton().setGUISheet(sheet);
+}
+
+
+bool IntroState::Play (const CEGUI::EventArgs &evt){
+      
+    CEGUI::Window* sheet = CEGUI::System::getSingleton().getGUISheet();
+    sheet->getChild("menuP")->hide();
+    CEGUI::MouseCursor::getSingleton().hide();
+    changeState(PlayState::getSingletonPtr());
+     
+  return true;
+}
+
+bool IntroState::Salir (const CEGUI::EventArgs &evt){
+      
+      exit();
+     
+  return true;
 }

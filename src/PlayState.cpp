@@ -83,9 +83,12 @@ void PlayState::enter ()
 
   
   _sceneMgr->setSkyBox(true, "arrakisday",30,2);//SKYDOME
-  
-
+    
+  initSDL();
   init();   //inicializacion
+
+  this->_mainTrack->play();
+
 
   _exitGame = false;
 }
@@ -422,14 +425,17 @@ void PlayState::mousePressed(const OIS::MouseEvent &e, OIS::MouseButtonID id)
 {
   CEGUI::System::getSingleton().injectMouseButtonDown(convertMouseButton(id));
   if (id == 1) {
-    player->nave->lazerDer();
+    
+
     //_pSoundFXManager->load("laserShot.mp3")->play();
     //_simpleEffect = _pSoundFXManager->load("laserShot.mp3");
     //_simpleEffect->play();
   }
   if (id == 0) {
     player->nave->lazerIzq();
-    //_pSoundFXManager->load("laserShot.mp3")->play();
+    player->nave->lazerDer();
+    //player->nave->lazerDer();getSoundFXPtr()->play();
+    _pSoundFXManager->load("laserShot.wav")->play();
   }
 }
 //------------------------------------------
@@ -480,6 +486,15 @@ PlayState& PlayState::getSingleton ()
 
 void PlayState::init(){
 
+
+  _pTrackManager = new TrackManager;
+  _pSoundFXManager = new SoundFXManager;
+
+  _mainTrack = _pTrackManager->load("ambient.mp3");
+  _simpleEffect = _pSoundFXManager->load("laserShot.wav");
+
+
+
   //overlays
   Ogre::Overlay *overlay = _overlayManager->getByName("estadoInfo");
   overlay->show();
@@ -501,17 +516,15 @@ void PlayState::init(){
   SceneNode* planetaNodo =  _sceneMgr->createSceneNode("planetas");
   _sceneMgr->getRootSceneNode()->addChild(planetaNodo);
   
-
   
-   initSDL();
-  _pTrackManager = new TrackManager;
-  _pSoundFXManager = new SoundFXManager;
-
+  
+   
+  
   //_simpleEffect = _pSoundFXManager->load("laserShot.mp3");
   
   // Carga del sonido.
-  _pTrackManager->load("ambient.mp3")->play();   //dale play!!
-
+  //_pTrackManager->load("ambient.mp3")->play();   //dale play!!
+  
 
  
   //---------------------------inicializando player
@@ -545,7 +558,7 @@ void PlayState::init(){
 
 
   yisus->createGalaxy(Vector3(0,0,0),20);  //----------------------- crear sistema solar 
-  yisus->createGalaxy(Vector3(10000,10000,10000),10);
+  //yisus->createGalaxy(Vector3(10000,10000,10000),10);
 
 
 

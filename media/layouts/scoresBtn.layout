@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GUILayout>
+       
+   <!-- scores -->
+    <Window Type="TaharezLook/Button" Name="menuP/scores">
+      <Property Name="Text" Value="  Puntuaciones" />
+      <Property Name="UnifiedAreaRect" Value="{{0.75,0},{0.5,0},{1,0},{0.6,0}}"/>
+    </Window>
+	
+</GUILayout>

@@ -61,6 +61,7 @@ NavePj::NavePj(int hpNave, int enerNave, Vector3 pos){
     propulsion = 0;
     takingFire = false;
     consola = new chatPc();
+    anguloGiro = new btVector3(0,0,0);
     
     numNaves++;
 
@@ -560,7 +561,11 @@ void NavePj::calculate(Ogre::Real deltaT){
 
     //rigidBody->forceActivationState ();
     //btVector3 dir = btVector3(pCam->getDerivedDirection().x, pCam->getDerivedDirection().y, pCam->getDerivedDirection().z);
-    //rigidBody->getBulletRigidBody()->applyCentralForce(btVector3(dir * propulsion * 100));
+    ///*if ((rigidBody->getBulletRigidBody()->getLinearVelocity()*1) < propulsion *100)*/ rigidBody->getBulletRigidBody()->applyImpulse(btVector3(dir * propulsion * 100 *deltaT),dir);
+
+
+
+
     
     //rigidBody->getBulletRigidBody()->applyCentralForce(propulsion*pCam->getDerivedDirection().normalisedCopy());
     if (((propulsion/15) < ener) && (prop_P.func == true)){
@@ -781,26 +786,39 @@ int NavePj::getHp(){
 //----------------mandos del avion:
 void NavePj::yaw(int signo){                 //yaw
    
+
+    float factor;
+   if (propulsion*0.5 > 1) {
+        factor = signo * 0.01 / (propulsion*0.4); 
+   } else factor = signo * 0.01;
+
+
    if (signo < 1)
    {
        if (ala_I.func){
 
-        naveNodo->yaw(Radian(signo*0.01));
+        naveNodo->yaw(Radian(factor)); 
         //_animState = naveEnt->getAnimationState("rotIzq"); 
         //_animState->setEnabled(true);
         //_animState->loop(false);
     }
-   } else if (ala_D.func) naveNodo->yaw(Radian(signo*0.01));
+   } else if (ala_D.func) naveNodo->yaw(Radian(factor));
    
 }
 
 void NavePj::pitch(int signo){               //pitch
     
     
-    if (signo < 1)
-   {
-       if (prop_P.func) naveNodo->pitch(Radian(signo*0.001));
-   } else if (prop_P.func) naveNodo->pitch(Radian(signo*0.001));
+    float factor;
+   if (propulsion*0.05 > 1) {
+        factor = signo * 0.001 / (propulsion*0.1); 
+   } else factor = signo * 0.001;
+
+
+   // if (signo < 1)
+   //{
+       if (prop_P.func) naveNodo->pitch(Radian(factor));
+   //} else if (prop_P.func) naveNodo->pitch(Radian(signo*0.001));
 
     //rigidBody->forceActivationState ();
     //rigidBody->getBulletRigidBody()->applyTorqueImpulse(btVector3(signo*300, 0, 0));
@@ -808,16 +826,29 @@ void NavePj::pitch(int signo){               //pitch
 }
 
 void NavePj::roll(int signo){ 
-   //rigidBody->getBulletRigidBody()->applyTorqueImpulse(btVector3(1,300,1));            //roll
+    
+    //rigidBody->getBulletRigidBody()->setAngularFactor(900);
+    //rigidBody->getBulletRigidBody()->applyTorqueImpulse(btVector3(0,900,0));            //roll
+    
+
+    //*anguloGiro = *anguloGiro + btVector3(0,0,propulsion * 100 *signo);
+    //if (*anguloGiro->getX().abs() > 0.1) 
+    //rigidBody->getBulletRigidBody()->applyTorqueImpulse(*anguloGiro);
    
     //MyMotionState* fallMotionState = new MyMotionState(btTransform(btQuaternion(0,30,0,30),btVector3(56,10,0)),naveNodo);
     //rigidBody->forceActivationState ();
-    //rigidBody->getBulletRigidBody()->setAngularFactor(300);
+    
     //rigidBody->getBulletRigidBody()->applyTorque(btVector3(0, 0, signo*300));
-   if (signo < 1)
-   {
-       if (prop_S.func) naveNodo->roll(Radian(signo*0.001));
-   } else if (prop_S.func) naveNodo->roll(Radian(signo*0.001));
+
+
+   float factor;
+   if (propulsion*0.5 > 1) {
+        factor = signo * 0.001 / (propulsion*0.4); 
+   } else factor = signo * 0.005;
+   //{
+       if (prop_S.func) naveNodo->roll(Radian(factor));
+   //} else if (prop_S.func) naveNodo->roll(Radian(signo*0.001));
+   
 
 
    //naveNodo->roll(Radian(signo*0.001));

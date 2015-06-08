@@ -20,6 +20,7 @@
 #include "TrackManager.h"
 #include "SoundFXManager.h"
 
+
 using namespace Ogre;
 using namespace std;
 using namespace OgreBulletCollisions;
@@ -110,6 +111,7 @@ class PlayState : public Ogre::Singleton<PlayState>, public GameState
   SoundFXManager* _pSoundFXManager;
   TrackPtr _mainTrack;
   SoundFXPtr _simpleEffect;
+  
 
 
 

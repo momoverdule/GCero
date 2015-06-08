@@ -16,7 +16,7 @@ LDFLAGS := `pkg-config --libs-only-L CEGUI-OGRE` `pkg-config --libs-only-l	\
 OgreBullet` `pkg-config --libs-only-l bullet`
 
 LDLIBS := `pkg-config --libs-only-l CEGUI-OGRE` `pkg-config --libs-only-l	\
-OgreBullet` `pkg-config --libs-only-l bullet` -lOIS -lGL -lstdc++ -lSDL -lSDL_mixer -lboost_system -lConvexDecomposition
+OgreBullet` `pkg-config --libs-only-l bullet` -lOIS -lGL -lstdc++ -lSDL -lSDL_mixer -lboost_system -lConvexDecomposition -lboost_graph
 
 # Modo de compilación (-mode=release -mode=debug) --------------------
 ifeq ($(mode), release) 

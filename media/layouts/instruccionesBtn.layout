@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GUILayout>
+       
+   <!-- instrucciones -->
+    <Window Type="TaharezLook/Button" Name="menuP/instrucciones">
+      <Property Name="Text" Value="  Instrucciones de Juego" />
+      <Property Name="UnifiedAreaRect" Value="{{0.75,0},{0.6,0},{1,0},{0.7,0}}"/>
+    </Window>
+	
+</GUILayout>

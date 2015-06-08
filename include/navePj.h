@@ -157,13 +157,14 @@ private:
      
 
 
-    //punteros graficos:
+    
     Ogre::SceneNode* naveNodo;
     Ogre::SceneNode* gun2;
     Ogre::SceneNode* gun1;
     Ogre::SceneNode* sat1Nodo;
     Ogre::SceneNode* sat2Nodo;
     OgreBulletDynamics::RigidBody *rigidBody;
+    btVector3* anguloGiro;
     Ogre::Entity* naveEnt;
     Ogre::Camera* pCam;
  	Ogre::Camera* sat1Cam;
@@ -173,6 +174,7 @@ private:
  	Ogre::Light* luzProp1;
  	Ogre::Light* luzProp2;
  	Ogre::OverlayManager* _overlayManager;
+
 
 
 
