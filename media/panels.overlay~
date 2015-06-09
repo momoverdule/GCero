@@ -2,8 +2,8 @@ template element TextArea(letraAmarilla)
 {
     font_name Blue
 		metrics_mode relative
-		char_height 0.012
-		colour 1.0 0.8 0.0    
+		char_height 0.01
+		colour 1.0 1.0 0.1    
 }
 
 
@@ -11,7 +11,7 @@ template element TextArea(letraChat)
 {
     font_name Blue
 		metrics_mode relative
-		char_height 0.017
+		char_height 0.012
 		colour 1.0 1.0 0.1    
 }
 
@@ -30,22 +30,22 @@ estadoInfo
 	material panel
 	
 
-		    element TextArea(hpInfo) : letraChat 
+		    element TextArea(hpInfo) : letraAmarilla 
 		    {
 				  top 0.02
-				  left 0.10
+				  left 0.095
 		    }
 		    
-		    element TextArea(enerInfo) : letraChat 
+		    element TextArea(enerInfo) : letraAmarilla 
 		    {	
 				  top 0.04
-				  left 0.11	 
+				  left 0.095	 
 		    }
 		    
-		    element TextArea(propInfo) : letraChat 
+		    element TextArea(propInfo) : letraAmarilla 
 		    {
 				  top 0.06
-				  left 0.10	 
+				  left 0.095	 
 		    }
 		    
 		    

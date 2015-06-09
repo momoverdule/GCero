@@ -3,7 +3,7 @@
        
      <!-- Creditos -->
     <Window Type="TaharezLook/Button" Name="menuP/Creditos">
-      <Property Name="Text" Value="  Creditos" />
+      <Property Name="Text" Value="  creditos" />
       <Property Name="UnifiedAreaRect" Value="{{0.75,0},{0.7,0},{1,0},{0.8,0}}"/>
     </Window>
 	

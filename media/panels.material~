@@ -8,6 +8,7 @@ material panel
      texture_unit 
      {
        texture green_box.png
+       alpha_op_ex source1 src_manual src_texture 0.5
      }
    }
  }

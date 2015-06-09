@@ -1,7 +1,7 @@
 Blue 
 {
 	type truetype
-	source Blue.ttf
-	size 25
+	source tech.ttf
+	size 8
 	resolution 96
 }

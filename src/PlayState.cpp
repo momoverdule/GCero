@@ -1,5 +1,6 @@
 #include "PlayState.h"
 #include "PauseState.h"
+#include "MenuState.h"
 #include "IntroState.h"
 #include <iostream>
 #include <list>
@@ -38,6 +39,7 @@ template<> PlayState* Ogre::Singleton<PlayState>::msSingleton = 0;
 // ----------------ENTER
 void PlayState::enter ()
 {
+   cout << "entrada a playState \n" << endl;
   srand (time(NULL));
 
   _root = Ogre::Root::getSingletonPtr();
@@ -74,18 +76,22 @@ void PlayState::enter ()
   wHandleStr << windowHandle;
   param.insert(make_pair("WINDOW", wHandleStr.str()));
   
-  _inputMgr = OIS::InputManager::createInputSystem(param);
-  _keyboard = static_cast<OIS::Keyboard*>(_inputMgr->createInputObject(OIS::OISKeyboard, true));
+  //_inputMgr = OIS::InputManager::createInputSystem(param);
+  //_keyboard = static_cast<OIS::Keyboard*>(_inputMgr->createInputObject(OIS::OISKeyboard, true));
   
-  _inputMgr = OIS::InputManager::createInputSystem(param);
-  _keyboard = static_cast<OIS::Keyboard*>
-    (_inputMgr->createInputObject(OIS::OISKeyboard, true));
+  //_inputMgr = OIS::InputManager::createInputSystem(param);
+  //_keyboard = static_cast<OIS::Keyboard*>
+  //  (_inputMgr->createInputObject(OIS::OISKeyboard, true));
 
   
   _sceneMgr->setSkyBox(true, "arrakisday",30,2);//SKYDOME
+  
+  cout << "cargas primarias listas \n" << endl;
     
   initSDL();
+  cout << "SDL iniciado \n" << endl;
   init();   //inicializacion
+  cout << "init iniciado \n" << endl;
 
   this->_mainTrack->play();
 
@@ -97,6 +103,21 @@ void PlayState::enter ()
 
 void PlayState::exit ()
 {
+
+  this->_mainTrack->stop();
+  
+  
+  Ogre::Overlay *overlay = _overlayManager->getByName("estadoInfo");
+  overlay->hide();
+  overlay = _overlayManager->getByName("pcChat");
+  overlay->hide();
+  overlay = _overlayManager->getByName("backCam");
+  overlay->hide();
+  CEGUI::Window* sheet = CEGUI::System::getSingleton().getGUISheet();
+  CEGUI::Window* ceguiCam =  sheet->getChild("Ex1/Sheet");
+  ceguiCam->hide();
+  delete ceguiCam;
+  delete auxCam;
 
   cout << "\n Saliendo del juego" << endl;
   _sceneMgr->clearScene();
@@ -394,8 +415,8 @@ void PlayState::keyReleased(const OIS::KeyEvent &e)
 
 
   if (e.key == OIS::KC_ESCAPE) {
-
-    _exitGame = true;
+    changeState(MenuState::getSingletonPtr());
+    //_exitGame = true;
   }
 }
 //------------------------------------------
@@ -547,7 +568,7 @@ void PlayState::init(){
   
     
 
-  _camera->setPosition(-16,5,0);
+  _camera->setPosition(-21,5.8,0);
   _camera->setDirection(1,0,0);
   player->nave->getNode()->attachObject(_camera);
 
@@ -558,7 +579,6 @@ void PlayState::init(){
 
 
   yisus->createGalaxy(Vector3(0,0,0),20);  //----------------------- crear sistema solar 
-  //yisus->createGalaxy(Vector3(10000,10000,10000),10);
 
 
 

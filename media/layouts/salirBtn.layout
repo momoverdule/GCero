@@ -3,7 +3,7 @@
        
      <!-- Salir -->
    <Window Type="TaharezLook/Button" Name="menuP/salir">
-      <Property Name="Text" Value="  Salir" />
+      <Property Name="Text" Value="  salir" />
       <Property Name="UnifiedAreaRect" Value="{{0.75,0},{0.8,0},{1,0},{0.9,0}}"/>
     </Window> 
 	

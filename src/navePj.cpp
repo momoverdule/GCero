@@ -76,7 +76,7 @@ NavePj::NavePj(int hpNave, int enerNave, Vector3 pos){
     
     //creando camaras:
     pCam = sMgr->createCamera("Principal");
-    pCam->setPosition(Vector3(4.4,1.15,0));
+    pCam->setPosition(Vector3(3.35,0.58,0.1));
     pCam->setDirection(1,0,0);
     pCam->setNearClipDistance(0.1);
     pCam->setFarClipDistance(100);

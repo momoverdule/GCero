@@ -29,9 +29,6 @@ class IntroState : public Ogre::Singleton<IntroState>, public GameState
   void mouseReleased (const OIS::MouseEvent &e, OIS::MouseButtonID id);
   CEGUI::MouseButton convertMouseButton(OIS::MouseButtonID id);
 
-  bool Play (const CEGUI::EventArgs &evt);
-  bool Salir (const CEGUI::EventArgs &evt);
-
   bool frameStarted (const Ogre::FrameEvent& evt);
   bool frameEnded (const Ogre::FrameEvent& evt);
 
@@ -40,9 +37,6 @@ class IntroState : public Ogre::Singleton<IntroState>, public GameState
   static IntroState* getSingletonPtr ();
   
   void createCGui();
-  Ogre::SceneNode* luna;
-  Ogre::SceneNode* planeta;
-  Ogre::SceneNode* origin;
   
  protected:
   Ogre::Root* _root;
